@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WheelsCrawler.Data.Repository;
 
-namespace DotnetCrawler.Data.Repository
+namespace WheelsCrawler.Data.Repository
 {
     //used this resources : https://codingblast.com/entity-framework-core-generic-repository/
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
@@ -34,20 +34,21 @@ namespace DotnetCrawler.Data.Repository
         public async Task CreateAsync(TEntity entity)
         {
             await _dbContext.Set<TEntity>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+        }
+        public async Task<bool> SaveAll()
+        {
+                return await _dbContext.SaveChangesAsync() > 0;
         }
 
         public async Task Update(int id, TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
             var entity = await GetById(id);
             _dbContext.Set<TEntity>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
         }
 
     }

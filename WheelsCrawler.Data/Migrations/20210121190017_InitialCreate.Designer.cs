@@ -8,7 +8,7 @@ using WheelsCrawler.Data.Models;
 namespace WheelsCrawler.Data.Migrations
 {
     [DbContext(typeof(WheelsCrawlerDbContext))]
-    [Migration("20210120130450_InitialCreate")]
+    [Migration("20210121190017_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,12 +27,6 @@ namespace WheelsCrawler.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CarTypeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CatalogBrandId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CatalogTypeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -76,7 +70,7 @@ namespace WheelsCrawler.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("BrandName")
+                    b.Property<string>("TypeName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

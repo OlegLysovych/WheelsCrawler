@@ -8,7 +8,7 @@ using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Processor
 {
-   public class WheelsCrawlerProcessor<TEntity> : IWheelsCrawlerProcessor<TEntity> where TEntity : class, IEntity
+    public class WheelsCrawlerProcessor<TEntity> : IWheelsCrawlerProcessor<TEntity> where TEntity : class, IEntity
     {
         public async Task<IEnumerable<TEntity>> Process(HtmlDocument document)
         {
@@ -45,8 +45,15 @@ namespace WheelsCrawler.Processor
                 {
                     case SelectorType.XPath:
                         var node = entityNode.SelectSingleNode(fieldExpression);
+                        
                         if (node != null)
-                            columnValue = node.InnerText;
+                            if (fieldExpression.Contains("src"))
+                                columnValue = node.GetAttributeValue("src","photo link");
+                            else if (fieldExpression.Contains("href"))
+                                columnValue = node.GetAttributeValue("href","car link");
+                            else
+                                columnValue = node.InnerText;
+                            
                         break;
                     case SelectorType.CssSelector:
                         var nodeCss = entityNode.QuerySelector(fieldExpression);

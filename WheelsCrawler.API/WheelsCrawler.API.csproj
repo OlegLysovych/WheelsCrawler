@@ -12,5 +12,15 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WheelsCrawler.Core\WheelsCrawler.Core.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Data\WheelsCrawler.Data.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Request\WheelsCrawler.Request.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Downloader\WheelsCrawler.Downloader.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Pipeline\WheelsCrawler.Pipeline.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Processor\WheelsCrawler.Processor.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Scheduler\WheelsCrawler.Scheduler.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -1,16 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <ItemGroup>
     <ProjectReference Include="..\WheelsCrawler.Request\WheelsCrawler.Request.csproj" />
-    <ProjectReference Include="..\WheelsCrawler.Data\WheelsCrawler.Data.csproj" />
     <ProjectReference Include="..\WheelsCrawler.Downloader\WheelsCrawler.Downloader.csproj" />
     <ProjectReference Include="..\WheelsCrawler.Pipeline\WheelsCrawler.Pipeline.csproj" />
     <ProjectReference Include="..\WheelsCrawler.Processor\WheelsCrawler.Processor.csproj" />
     <ProjectReference Include="..\WheelsCrawler.Scheduler\WheelsCrawler.Scheduler.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Data\WheelsCrawler.Data.csproj" />
+    <ProjectReference Include="..\WheelsCrawler.Core\WheelsCrawler.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.29" />
-  </ItemGroup>
+
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
 </Project>

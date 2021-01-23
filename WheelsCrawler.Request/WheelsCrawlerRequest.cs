@@ -2,8 +2,8 @@ namespace WheelsCrawler.Request
 {
     public class WheelsCrawlerRequest : IWheelsCrawlerRequest
     {
-        public string Url { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public string Regex { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public long TimeOut { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string Url { get; set; }
+        public string Regex { get; set; }
+        public long TimeOut { get; set; }
     }
 }

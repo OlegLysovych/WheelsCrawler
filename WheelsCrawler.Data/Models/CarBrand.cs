@@ -5,13 +5,13 @@ namespace WheelsCrawler.Data.Models
 {
     public partial class CarBrand : IEntity
     {
-        public CarBrand()
-        {
-            Car = new HashSet<Car>();
-        }
+        // public CarBrand()
+        // {
+        //     Cars = new HashSet<Car>();
+        // }
         public int Id { get; set; }
         public string BrandName { get; set; }
 
-        public virtual ICollection<Car> Car { get; set; }
+        // public virtual ICollection<Car> Cars { get; set; }
     }
 }

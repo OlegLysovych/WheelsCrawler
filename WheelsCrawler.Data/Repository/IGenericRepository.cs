@@ -13,5 +13,6 @@ namespace WheelsCrawler.Data.Repository
         Task CreateAsync(TEntity entity);
         Task Update(int id, TEntity entity);
         Task Delete(int id);
+        Task<bool> SaveAll();
     }
 }

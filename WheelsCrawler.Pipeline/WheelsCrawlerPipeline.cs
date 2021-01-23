@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DotnetCrawler.Data.Repository;
 using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Pipeline
@@ -19,6 +18,9 @@ namespace WheelsCrawler.Pipeline
             foreach (var entity in entityList)
             {
                 await _repository.CreateAsync(entity);
+                if (await _repository.SaveAll())
+                    continue;
+
             }
         }
     }

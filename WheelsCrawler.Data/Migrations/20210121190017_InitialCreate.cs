@@ -25,7 +25,7 @@ namespace WheelsCrawler.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BrandName = table.Column<string>(type: "TEXT", nullable: true)
+                    TypeName = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,14 +38,12 @@ namespace WheelsCrawler.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    CatalogBrandId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CatalogTypeId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CarBrandId = table.Column<int>(type: "INTEGER", nullable: true),
+                    CarTypeId = table.Column<int>(type: "INTEGER", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     PictureUri = table.Column<string>(type: "TEXT", nullable: true),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    CarBrandId = table.Column<int>(type: "INTEGER", nullable: false),
-                    CarTypeId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
