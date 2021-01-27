@@ -4,7 +4,7 @@ using System.Xml.XPath;
 
 namespace WheelsCrawler.Data.Dto
 {
-    [WheelsCrawlerEntity(XPath = "/html/body/div[2]/div[6]")]
+    [WheelsCrawlerEntity(XPath = "//*[@id='rst-page-oldcars-item']")]
     public partial class CarRstDto : IEntity
     {
         public int Id { get; set; }
@@ -15,25 +15,25 @@ namespace WheelsCrawler.Data.Dto
         // [WheelsCrawlerField(Expression = "1", SelectorType = SelectorType.FixedValue)]
         public int CarTypeId { get; set; }
 
-        [WheelsCrawlerField(Expression = "//*[@id='full-description']/text()", SelectorType = SelectorType.XPath)]
-        public string Description { get; set; }
+        [WheelsCrawlerField(Expression = "//*[@id='rst-page-oldcars-item-option-block-container-desc']/text()", SelectorType = SelectorType.XPath)]
+        public string Description { get; set; }//*[@id="rst-page-oldcars-item-option-block-container-desc"]
 
-        [WheelsCrawlerField(Expression = "/html/body/div[2]/div[6]/main/div[2]/h3", SelectorType = SelectorType.XPath)]
+        [WheelsCrawlerField(Expression = "//*[@id='rst-page-oldcars-item-header']/text()", SelectorType = SelectorType.XPath)]
         public string Name { get; set; }
 
-        [WheelsCrawlerField(Expression = "//*[@id='photosBlock']/div[1]/div[1]/div[1]/picture/img/@src", SelectorType = SelectorType.XPath)]
-        public string PictureUri { get; set; }//*[@id='photosBlock']/div[1]/div[1]/div[1]/picture/img/@src
+        [WheelsCrawlerField(Expression = "//*[@id='rst-page-oldcars-mainphoto']/@src", SelectorType = SelectorType.XPath)]
+        public string PictureUri { get; set; }
 
-        [WheelsCrawlerField(Expression = "/html/head/link[74]/@href", SelectorType = SelectorType.XPath)]
+        [WheelsCrawlerField(Expression = "/html/head/link[4]/@href", SelectorType = SelectorType.XPath)]
         public string CarUri { get; set; }
 
-        [WheelsCrawlerField(Expression = "/html/body/div[2]/div[6]/main/div[2]/section/span[1]", SelectorType = SelectorType.XPath)]
-        public string Price { get; set; }
+        [WheelsCrawlerField(Expression = "//*[@id='rst-page-oldcars-item']/div[2]/ul/li[1]/span[2]/span/span", SelectorType = SelectorType.XPath)]
+        public string Price { get; set; }//*[@id="rst-page-oldcars-item"]/div[2]/ul/li[1]/span[2]/span/span
 
-        [WheelsCrawlerField(Expression = "//*[@id='description_v3']/dl/dd[2]/span[2]", SelectorType = SelectorType.XPath)]
-        public string Kilometrage { get; set; }
+        [WheelsCrawlerField(Expression = "//*[@id='rst-page-oldcars-item']/div[2]/ul/li[2]/span[2]/span", SelectorType = SelectorType.XPath)]
+        public string Kilometrage { get; set; }//*[@id="rst-page-oldcars-item"]/div[2]/ul/li[2]/span[2]/span
 
-        [WheelsCrawlerField(Expression = "//*[@id='description_v3']/dl/dd[3]/span[2]", SelectorType = SelectorType.XPath)]
+        [WheelsCrawlerField(Expression = "//*[@id='rst-page-oldcars-item']/div[2]/ul/li[3]/span[2]/strong", SelectorType = SelectorType.XPath)]
         public string EngineСapacity { get; set; }
 
         // public virtual CarBrand CarBrand { get; set; }

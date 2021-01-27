@@ -1,19 +1,22 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
+using WheelsCrawler.Data.Dto;
+using WheelsCrawler.Data.Models;
 using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Pipeline
 {
-    public class WheelsCrawlerPipeline<TEntity> : IWheelsCrawlerPipeline<TEntity> where TEntity : class, IEntity
+    public class WheelsCrawlerPipeline<NEntity> : IWheelsCrawlerPipeline<NEntity> where NEntity : class, IEntity
     {
-        private readonly IGenericRepository<TEntity> _repository;
+        private readonly IGenericRepository<NEntity> _repository;
 
         public WheelsCrawlerPipeline()
         {
-            _repository = new GenericRepository<TEntity>();
+            _repository = new GenericRepository<NEntity>();
         }
 
-        public async Task Run(IEnumerable<TEntity> entityList)
+        public async Task Run(IEnumerable<NEntity> entityList)
         {
             foreach (var entity in entityList)
             {

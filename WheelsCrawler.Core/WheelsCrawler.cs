@@ -8,44 +8,44 @@ using WheelsCrawler.Scheduler;
 
 namespace WheelsCrawler.Core
 {
-    public class WheelsCrawler<TEntity> : IWheelsCrawler where TEntity : class, IEntity
+    public class WheelsCrawler<TEntity, NEntity> : IWheelsCrawler where TEntity : class, IEntity where NEntity : class, IEntity
     {
         public IWheelsCrawlerRequest Request { get; private set; }
         public IWheelsCrawlerDownloader Downloader { get; private set; }
-        public IWheelsCrawlerProcessor<TEntity> Processor { get; private set; }
+        public IWheelsCrawlerProcessor<TEntity, NEntity> Processor { get; private set; }
         public IWheelsCrawlerScheduler Scheduler { get; private set; }
-        public IWheelsCrawlerPipeline<TEntity> Pipeline { get; private set; }
+        public IWheelsCrawlerPipeline<NEntity> Pipeline { get; private set; }
 
         public WheelsCrawler()
         {
 
         }
 
-        public WheelsCrawler<TEntity> AddRequest(IWheelsCrawlerRequest request)
+        public WheelsCrawler<TEntity, NEntity> AddRequest(IWheelsCrawlerRequest request)
         {
             Request = request;
             return this;
         }
 
-        public WheelsCrawler<TEntity> AddDownloader(IWheelsCrawlerDownloader downloader)
+        public WheelsCrawler<TEntity, NEntity> AddDownloader(IWheelsCrawlerDownloader downloader)
         {
             Downloader = downloader;
             return this;
         }
 
-        public WheelsCrawler<TEntity> AddProcessor(IWheelsCrawlerProcessor<TEntity> processor)
+        public WheelsCrawler<TEntity, NEntity> AddProcessor(IWheelsCrawlerProcessor<TEntity, NEntity> processor)
         {
             Processor = processor;
             return this;
         }
 
-        public WheelsCrawler<TEntity> AddScheduler(IWheelsCrawlerScheduler scheduler)
+        public WheelsCrawler<TEntity, NEntity> AddScheduler(IWheelsCrawlerScheduler scheduler)
         {
             Scheduler = scheduler;
             return this;
         }
 
-        public WheelsCrawler<TEntity> AddPipeline(IWheelsCrawlerPipeline<TEntity> pipeline)
+        public WheelsCrawler<TEntity, NEntity> AddPipeline(IWheelsCrawlerPipeline<NEntity> pipeline)
         {
             Pipeline = pipeline;
             return this;

@@ -4,8 +4,8 @@ using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Pipeline
 {
-    public interface IWheelsCrawlerPipeline<TEntity> where TEntity : class, IEntity
+    public interface IWheelsCrawlerPipeline<NEntity> where NEntity : class, IEntity
     {
-        Task Run(IEnumerable<TEntity> entity);
+        Task Run(IEnumerable<NEntity> entity);
     }
 }

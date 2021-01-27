@@ -36,6 +36,9 @@ namespace WheelsCrawler.Downloader
                 case WheelsCrawlerDownloaderType.FromFile:
                     using (WebClient client = new WebClient())
                     {
+                        client.Headers.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)");
+                        if (crawlUrl.Contains("rst"))
+                            client.Encoding = System.Text.Encoding.GetEncoding(1251);
                         await client.DownloadFileTaskAsync(crawlUrl, _localFilePath);
                     }
                     return GetExistingFile(_localFilePath);
@@ -44,6 +47,9 @@ namespace WheelsCrawler.Downloader
                     var htmlDocument = new HtmlDocument();
                     using (WebClient client = new WebClient())
                     {
+                        client.Headers.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)");
+                        if (crawlUrl.Contains("rst"))
+                            client.Encoding = System.Text.Encoding.GetEncoding(1251);
                         string htmlCode = await client.DownloadStringTaskAsync(crawlUrl);
                         htmlDocument.LoadHtml(htmlCode);
                     }

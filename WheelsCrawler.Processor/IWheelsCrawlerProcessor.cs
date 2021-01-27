@@ -5,8 +5,8 @@ using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Processor
 {
-    public interface IWheelsCrawlerProcessor<TEntity> where TEntity : class, IEntity
+    public interface IWheelsCrawlerProcessor<TEntity, NEntity> where TEntity : class, IEntity where NEntity : class
     {
-        Task<IEnumerable<TEntity>> Process(HtmlDocument document);
+        Task<IEnumerable<NEntity>> Process(HtmlDocument document);
     }
 }
