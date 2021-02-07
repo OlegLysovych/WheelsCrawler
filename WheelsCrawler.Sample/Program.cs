@@ -22,17 +22,17 @@ namespace WheelsCrawler.Sample
         }
         static async Task MainAsync(string[] args)
         {
-            // var crawlerRia = new WheelsCrawler<CarRiaDto, Car>()
-            //                      .AddRequest(new WheelsCrawlerRequest { Url = "https://auto.ria.com/uk/legkovie/mercedes-benz/cl-class/?countpage=100", Regex = @".*/auto_[^ria].+", TimeOut = 5000 })
-            //                      .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/"})
-            //                      .AddProcessor(new WheelsCrawlerProcessor<CarRiaDto, Car> { })
-            //                      .AddPipeline(new WheelsCrawlerPipeline<Car> { });
+            var crawlerRia = new WheelsCrawler<CarRiaDto, Car>()
+                                 .AddRequest(new WheelsCrawlerRequest { Url = "https://auto.ria.com/uk/legkovie/mercedes-benz/cl-class/?countpage=100", Regex = @".*/auto_[^ria].+", TimeOut = 5000 })
+                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/"})
+                                 .AddProcessor(new WheelsCrawlerProcessor<CarRiaDto, Car> { })
+                                 .AddPipeline(new WheelsCrawlerPipeline<Car> { });
 
-            // await crawlerRia.Crawle();
+            await crawlerRia.Crawle();
 
             var crawlerRST = new WheelsCrawler<CarRstDto, Car>()
-                                 .AddRequest(new WheelsCrawlerRequest { Url = "https://rst.ua/ukr/oldcars/mercedes/cl-class/", Regex = @".*/oldcars/.+\.html$", TimeOut = 5000 })//[^.*/\d\2Ehtml$]
-                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromWeb, DownloadPath = @"C:/Users/PC/source/repos/WheelsCrawler/htmls/RST/"})//
+                                 .AddRequest(new WheelsCrawlerRequest { Url = "https://rst.ua/ukr/oldcars/mercedes/cl-class/", Regex = @".*/oldcars/.+_.+\.html$", TimeOut = 5000 })//[^\d{}]
+                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = @"C:/Users/PC/source/repos/WheelsCrawler/htmls/RST/"})//
                                  .AddProcessor(new WheelsCrawlerProcessor<CarRstDto, Car> { })
                                  .AddPipeline(new WheelsCrawlerPipeline<Car> { });
 

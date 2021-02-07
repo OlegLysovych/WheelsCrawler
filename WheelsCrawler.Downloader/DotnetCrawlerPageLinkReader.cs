@@ -49,29 +49,11 @@ namespace WheelsCrawler.Downloader
         {
             try
             {
-                // HtmlWeb web = new HtmlWeb();
-                // //Encoding encoding = Encoding.UTF8;
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                // if (url.Contains("rst"))
-                // {
-                //     //encoding = Encoding.UTF7;
-                //     web = new HtmlWeb
-                //     {
-                //         AutoDetectEncoding = false,
-                //         OverrideEncoding = Encoding.GetEncoding("windows-1251"),
-                //     };
-                //     WebClient wc = new WebClient();
-                //     var str = wc.DownloadString(url);
-                //     var htmlD = new HtmlAgilityPack.HtmlDocument();
-                //     htmlD.LoadHtml(str);
-                //     // web.UserAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0";
-                // }
-                // web.UserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)";// 
-                // var htmlDocument = await web.LoadFromWebAsync(url);
                 var htmlDocument = new HtmlAgilityPack.HtmlDocument();
                 switch (url)
                 {
-                    case string c when c.Contains("rst"):
+                    case string c when c.Contains("rst")://do it wothout hardcode, maybe test call, check encoding, set here and call again to scrap?
                         WebClient wc = new WebClient();
                         wc.Encoding = System.Text.Encoding.GetEncoding(1251);
                         wc.Headers.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)");
@@ -99,14 +81,9 @@ namespace WheelsCrawler.Downloader
                     linkList = linkList.Where(x => _regex.IsMatch(x));
 
                 if (url.Contains("rst"))
-                    // linkList.ToList().ForEach(x => x = "https://rst.ua" + x);//x = x.Insert(0, "rst.ua")\ 
-                    // linkList.ToList().ForEach(x => x = x.Insert(0,"https://rst.ua"));//x = x.Insert(0, "rst.ua")\ 
                     foreach (var item in linkList)
                     {
                         linkList = linkList.Select(x => x.Equals(item) ? $"https://rst.ua{x}" : x);
-
-                        // linkList.Where(x => x.Equals(item)).
-                        // item.Insert(0, "https://rst.ua");
                     }
 
                 return linkList;

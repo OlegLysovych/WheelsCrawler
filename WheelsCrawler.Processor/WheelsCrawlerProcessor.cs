@@ -54,11 +54,11 @@ namespace WheelsCrawler.Processor
 
                         if (node != null)
                             if (fieldExpression.Contains("src"))
-                                columnValue = node.GetAttributeValue("src", "photo link");
+                                columnValue = node.GetAttributeValue("src", "photo link");//need to do it without hardcoding
                             else if (fieldExpression.Contains("href"))
                                 columnValue = node.GetAttributeValue("href", "car link");
                             else
-                                columnValue = node.InnerText;
+                                columnValue = node.InnerText.Trim();//Need to delete white spaces from innertext
 
                         break;
                     case SelectorType.CssSelector:

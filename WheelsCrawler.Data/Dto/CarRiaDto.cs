@@ -21,7 +21,7 @@ namespace WheelsCrawler.Data.Dto
         [WheelsCrawlerField(Expression = "/html/body/div[2]/div[6]/main/div[2]/h3", SelectorType = SelectorType.XPath)]
         public string Name { get; set; }
 
-        [WheelsCrawlerField(Expression = "//*[@id='photosBlock']/div[1]/div[1]/div[1]/picture/img/@src", SelectorType = SelectorType.XPath)]
+        [WheelsCrawlerField(Expression = "//*[@id='photosBlock']/div[1]/div[1]//picture/img/@src", SelectorType = SelectorType.XPath)]
         public string PictureUri { get; set; }//*[@id='photosBlock']/div[1]/div[1]/div[1]/picture/img/@src
 
         [WheelsCrawlerField(Expression = "/html/head/link[74]/@href", SelectorType = SelectorType.XPath)]
