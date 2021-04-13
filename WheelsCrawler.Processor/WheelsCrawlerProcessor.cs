@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using HtmlAgilityPack;
@@ -11,74 +12,94 @@ using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Processor
 {
-    public class WheelsCrawlerProcessor<TEntity, NEntity> : IWheelsCrawlerProcessor<TEntity, NEntity> where TEntity : class, IEntity where NEntity : class
+    public class WheelsCrawlerProcessor<TEntity, NEntity> : IWheelsCrawlerProcessor<TEntity, NEntity> where TEntity : class, IEntity where NEntity : class, IEntity
     {
+        private readonly IGenericRepository<NEntity> _repository;
+        public WheelsCrawlerProcessor()
+        {
+            _repository = new GenericRepository<NEntity>();
+        }
         public async Task<IEnumerable<NEntity>> Process(HtmlDocument document)
         {
-            var nameValueDictionary = GetColumnNameValuePairsFromHtml(document);
+            var entitiesAtOnePage = GetColumnNameValuePairsFromHtml(document);
 
-            var processorEntity = ReflectionHelper.CreateNewEntity<NEntity>();
-            foreach (var pair in nameValueDictionary)
+            List<NEntity> listEntities = new List<NEntity>();
+            foreach (var nameValueDictionary in entitiesAtOnePage)
             {
-                ReflectionHelper.TrySetProperty(processorEntity, pair.Key, pair.Value);
+                var processorEntity = ReflectionHelper.CreateNewEntity<NEntity>();
+
+                foreach (var pair in nameValueDictionary)
+                {
+                    ReflectionHelper.TrySetProperty(processorEntity, pair.Key, pair.Value);
+                }
+
+                var a = _repository.GetAll().AsEnumerable();
+                if (a.Count() == 0 || a.All(x => x.Equals(processorEntity) == false))
+                    listEntities.Add(processorEntity as NEntity);
             }
-            var config = new MapperConfiguration(c => c.CreateMap<NEntity,TEntity>());
+            var config = new MapperConfiguration(c => c.CreateMap<NEntity, TEntity>());
             IMapper mapper = new Mapper(config);
             // var entityToSave =  mapper.Map<NEntity>(processorEntity); 
 
-            return new List<NEntity>
-            {
-                processorEntity as NEntity
-            };
+            return listEntities;
+            // return new List<NEntity>
+            // {
+            //     processorEntity as NEntity
+            // };
         }
 
-        private static Dictionary<string, object> GetColumnNameValuePairsFromHtml(HtmlDocument document)
+        private static List<Dictionary<string, object>> GetColumnNameValuePairsFromHtml(HtmlDocument document)
         {
             var columnNameValueDictionary = new Dictionary<string, object>();
+            var entitiesAtOnePage = new List<Dictionary<string, object>>();
 
             var entityExpression = ReflectionHelper.GetEntityExpression<TEntity>();
             var propertyExpressions = ReflectionHelper.GetPropertyAttributes<TEntity>();
-            
-            var entityNode = document.DocumentNode.SelectSingleNode(entityExpression);
 
-            foreach (var expression in propertyExpressions)
+            var entityNodes = document.DocumentNode?.SelectNodes(entityExpression);
+            foreach (var entityNode in entityNodes)
             {
-                var columnName = expression.Key;
-                object columnValue = null;
-                var fieldExpression = expression.Value.Item2;
-
-                switch (expression.Value.Item1)
+                columnNameValueDictionary = new Dictionary<string, object>();
+                foreach (var expression in propertyExpressions)
                 {
-                    case SelectorType.XPath:
-                        var node = entityNode.SelectSingleNode(fieldExpression);
+                    var columnName = expression.Key;
+                    object columnValue = null;
+                    var fieldExpression = expression.Value.Item2;
 
-                        if (node != null)
-                            if (fieldExpression.Contains("src"))
-                                columnValue = node.GetAttributeValue("src", "photo link");//need to do it without hardcoding
-                            else if (fieldExpression.Contains("href"))
-                                columnValue = node.GetAttributeValue("href", "car link");
-                            else
-                                columnValue = node.InnerText.Trim();//Need to delete white spaces from innertext
+                    switch (expression.Value.Item1)
+                    {
+                        case SelectorType.XPath:
+                            var node = entityNode?.SelectSingleNode(fieldExpression);
 
-                        break;
-                    case SelectorType.CssSelector:
-                        var nodeCss = entityNode.QuerySelector(fieldExpression);
-                        if (nodeCss != null)
-                            columnValue = nodeCss.InnerText;
-                        break;
-                    case SelectorType.FixedValue:
-                        if (Int32.TryParse(fieldExpression, out var result))
-                        {
-                            columnValue = result;
-                        }
-                        break;
-                    default:
-                        break;
+                            if (node != null)
+                                if (fieldExpression.Contains("src"))
+                                    columnValue = node.GetAttributeValue("src", "photo link");//need to do it without hardcoding
+                                else if (fieldExpression.Contains("href"))
+                                    columnValue = node.GetAttributeValue("href", "car link");
+                                else
+                                    columnValue = node.InnerText.Trim();
+
+                            break;
+                        case SelectorType.CssSelector:
+                            var nodeCss = entityNode.QuerySelector(fieldExpression);
+                            if (nodeCss != null)
+                                columnValue = nodeCss.InnerText;
+                            break;
+                        case SelectorType.FixedValue:
+                            if (Int32.TryParse(fieldExpression, out var result))
+                            {
+                                columnValue = result;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    columnNameValueDictionary.Add(columnName, columnValue);
                 }
-                columnNameValueDictionary.Add(columnName, columnValue);
+                entitiesAtOnePage.Add(columnNameValueDictionary);
             }
 
-            return columnNameValueDictionary;
+            return entitiesAtOnePage;
         }
     }
 }

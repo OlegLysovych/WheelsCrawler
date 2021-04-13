@@ -63,8 +63,20 @@ namespace WheelsCrawler.Downloader
                         break;
                     case string a when !a.Contains("rst"):
                         // case string a when a.Contains("mobile"):
-                        HtmlWeb web = new HtmlWeb();
-                        web.UserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)";// 
+                        CookieCollection cookieCollection = null;
+                        HtmlWeb web = new HtmlWeb
+                        {
+                            UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36",
+                            UseCookies = true,
+                            PreRequest = request =>
+                            {
+                                if (cookieCollection != null && cookieCollection.Count > 0)
+                                    request.CookieContainer.Add(cookieCollection);
+                                return true;
+                            },
+                            PostResponse = (request, response) => { cookieCollection = response.Cookies; }
+                        };
+
                         htmlDocument = await web.LoadFromWebAsync(a);
                         break;
                     default:

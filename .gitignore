@@ -2,6 +2,8 @@
 .vs/
 htmls
 
+*.db
+
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
