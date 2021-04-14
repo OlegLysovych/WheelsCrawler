@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace WheelsCrawler.Data.Dto
 {
     [WheelsCrawlerEntity(XPath = "//*[contains(@class,'ticket-item')]")]// /html/body/div[5]/section[1]/div[2]/div/div/section[16]
-    public partial class CarRiaDtoCopy : IEntity
+    public partial class CarSearchRiaDto : IEntity
     {
         public int Id { get; set; }
 
@@ -49,11 +49,5 @@ namespace WheelsCrawler.Data.Dto
         [WheelsCrawlerField(Expression = ".//*[contains(@class,'definition-data')]/ul[1]/li[4]", SelectorType = SelectorType.XPath)]
         public string GearBox { get; set; }
 
-        // public int CompareTo([AllowNull] IEntity other)
-        // {
-        //     throw new System.NotImplementedException();
-        // }
-        // public virtual CarBrand CarBrand { get; set; }
-        // public virtual CarType CarType { get; set; }
     }
 }

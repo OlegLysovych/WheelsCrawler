@@ -8,7 +8,7 @@ using System;
 namespace WheelsCrawler.Data.Dto
 {
     [WheelsCrawlerEntity(XPath = "//*[contains(@id,'rst-ocid')]")]//*[@id="rst-ocid-12289048"]
-    public partial class CarRstDtoCopy : IEntity
+    public partial class CarSearchRstDto : IEntity
     {
         public int Id { get; set; }
 
@@ -51,44 +51,5 @@ namespace WheelsCrawler.Data.Dto
         [WheelsCrawlerField(Expression = "//*[@class='rst-ocb-i-d-l']/li[5]/span[2]", SelectorType = SelectorType.XPath)]
         public string GearBox { get; set; }
 
-        // public int CompareTo([AllowNull] IEntity other)
-        // {
-        //     if (other == null)
-        //         return 1;
-        //     var b = other as Car;
-        //     return CarUri.Equals(b.CarUri) ? 0 : -1;
-        // }
-
-        // public virtual CarBrand CarBrand { get; set; }
-        // public virtual CarType CarType { get; set; }
-
-        // public override bool Equals(object obj)
-        // {
-        //     if (obj == null)
-        //         return false;
-        //     Car b = obj as Car;
-        //     return CarUri.Equals(b.CarUri) && PictureUri.Equals(b.PictureUri);
-        // }
-
-        // public bool DuplicateAvoidComparing(object obj)
-        // {
-        //     if (obj == null)
-        //         return false;
-        //     Car b = obj as Car;
-        //     return CarUri.Equals(b.CarUri) && PictureUri.Equals(b.PictureUri);
-        // }
-
-        // public bool Equals([AllowNull] IEntity other)
-        // {
-        //     if (other == null)
-        //         return false;
-        //     CarRstDtoCopy b = other as CarRstDtoCopy;
-        //     return CarUri.Equals(b.CarUri);
-        // }
-
-        // public override int GetHashCode()
-        // {
-        //     return CarUri.GetHashCode() ^ PictureUri.GetHashCode();
-        // }
     }
 }

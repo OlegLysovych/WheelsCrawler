@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -22,18 +23,20 @@ namespace WheelsCrawler.Sample
         }
         static async Task MainAsync(string[] args)
         {
-            // var crawlerRia = new WheelsCrawler<CarRiaDto, Car>()
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            // var crawlerRia = new WheelsCrawler<CarPageRiaDto, Car>()
             //                      .AddRequest(new WheelsCrawlerRequest { Url = "https://auto.ria.com/uk/legkovie/mercedes-benz/cl-class/?countpage=100", Regex = @".*/auto_[^ria].+", TimeOut = 5000 })
             //                      .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/"})
-            //                      .AddProcessor(new WheelsCrawlerProcessor<CarRiaDto, Car> { })
+            //                      .AddProcessor(new WheelsCrawlerProcessor<CarPageRiaDto, Car> { })
             //                      .AddPipeline(new WheelsCrawlerPipeline<Car> { });
 
             // await crawlerRia.Crawle();
 
-            // var crawlerRST = new WheelsCrawler<CarRstDto, Car>()
+            // var crawlerRST = new WheelsCrawler<CarPageRstDto, Car>()
             //                      .AddRequest(new WheelsCrawlerRequest { Url = "https://rst.ua/ukr/oldcars/mercedes/cl-class/", Regex = @".*/oldcars/.+_.+\.html$", TimeOut = 5000 })//[^\d{}]
             //                      .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = @"C:/Users/PC/source/repos/WheelsCrawler/htmls/RST/"})//
-            //                      .AddProcessor(new WheelsCrawlerProcessor<CarRstDto, Car> { })
+            //                      .AddProcessor(new WheelsCrawlerProcessor<CarPageRstDto, Car> { })
             //                      .AddPipeline(new WheelsCrawlerPipeline<Car> { });
 
             // await crawlerRST.Crawle();
@@ -46,20 +49,26 @@ namespace WheelsCrawler.Sample
 
             // await crawlerMobile.Crawle();
 
-            var crawlerRia = new WheelsCrawler<CarRiaDtoCopy, Car>()
+            var crawlerRia = new WheelsCrawler<CarSearchRiaDto, Car>()
                                  .AddRequest(new WheelsCrawlerRequest { Url = "https://auto.ria.com/uk/legkovie/mercedes-benz/gl-class/", Regex = @"\?page=[0-9]+$", TimeOut = 5000 })
-                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/"})
-                                 .AddProcessor(new WheelsCrawlerProcessor<CarRiaDtoCopy, Car> { })
+                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/" })
+                                 .AddProcessor(new WheelsCrawlerProcessor<CarSearchRiaDto, Car> { })
                                  .AddPipeline(new WheelsCrawlerPipeline<Car> { });
 
             await crawlerRia.Crawle();
-            var crawlerRST = new WheelsCrawler<CarRstDtoCopy, Car>()
+            var crawlerRST = new WheelsCrawler<CarSearchRstDto, Car>()
                                  .AddRequest(new WheelsCrawlerRequest { Url = "https://rst.ua/ukr/oldcars/mercedes/gl/", Regex = @".*/oldcars/.+/[0-9]+\.html$", TimeOut = 5000 })//[^\d{}]
-                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = @"C:/Users/PC/source/repos/WheelsCrawler/htmls/RST/"})//
-                                 .AddProcessor(new WheelsCrawlerProcessor<CarRstDtoCopy, Car> { })
+                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = @"C:/Users/PC/source/repos/WheelsCrawler/htmls/RST/" })//
+                                 .AddProcessor(new WheelsCrawlerProcessor<CarSearchRstDto, Car> { })
                                  .AddPipeline(new WheelsCrawlerPipeline<Car> { });
 
             await crawlerRST.Crawle();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+           ts.Hours, ts.Minutes, ts.Seconds,
+           ts.Milliseconds / 10);
+            Console.WriteLine("RunTime " + elapsedTime);
         }
     }
 }

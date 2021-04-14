@@ -5,7 +5,7 @@ using System.Xml.XPath;
 namespace WheelsCrawler.Data.Dto
 {
     [WheelsCrawlerEntity(XPath = "//*[@id='rst-page-oldcars-item']")]
-    public partial class CarRstDto : IEntity
+    public partial class CarPageRstDto : IEntity
     {
         public int Id { get; set; }
 

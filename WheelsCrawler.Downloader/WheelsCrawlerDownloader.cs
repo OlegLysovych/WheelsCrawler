@@ -81,7 +81,7 @@ namespace WheelsCrawler.Downloader
             var htmlpage = string.Empty;
             if (parts.Length > 0)
             {
-                htmlpage = parts[parts.Length - 1];
+                htmlpage = parts[parts.Length - 3] + "_" + parts[parts.Length - 2] + "_" + parts[parts.Length - 1];
             }
 
             if (!htmlpage.Contains(".html"))

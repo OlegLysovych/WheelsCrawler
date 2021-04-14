@@ -7,8 +7,13 @@ namespace WheelsCrawler.Data.Dto
     {
         public AutoMapperProfiles()
         {
-            CreateMap<CarRiaDto, Car>();
-            CreateMap<CarRstDto, Car>();
+            //Ria
+            CreateMap<CarPageRiaDto, Car>();
+            CreateMap<CarSearchRiaDto, Car>();
+            //RST
+            CreateMap<CarPageRstDto, Car>();
+            CreateMap<CarSearchRstDto, Car>();
+            //Mobile
             CreateMap<CarMobileDto, Car>();
         }
     }
