@@ -48,7 +48,7 @@ namespace WheelsCrawler.Sample
 
             var crawlerRia = new WheelsCrawler<CarRiaDtoCopy, Car>()
                                  .AddRequest(new WheelsCrawlerRequest { Url = "https://auto.ria.com/uk/legkovie/mercedes-benz/gl-class/", Regex = @"\?page=[0-9]+$", TimeOut = 5000 })
-                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromWeb, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/"})
+                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/"})
                                  .AddProcessor(new WheelsCrawlerProcessor<CarRiaDtoCopy, Car> { })
                                  .AddPipeline(new WheelsCrawlerPipeline<Car> { });
 
