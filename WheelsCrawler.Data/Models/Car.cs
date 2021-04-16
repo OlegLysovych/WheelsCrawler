@@ -6,14 +6,9 @@ using System;
 
 namespace WheelsCrawler.Data.Models
 {
-    [WheelsCrawlerEntity(XPath = "/html/body/div[2]/div[6]")]
     public partial class Car : IEntity
     {
         public int Id { get; set; }
-
-        public int CarBrandId { get; set; }
-
-        public int CarTypeId { get; set; }
 
         public string Description { get; set; }
 
@@ -23,22 +18,24 @@ namespace WheelsCrawler.Data.Models
 
         public string CarUri { get; set; }
 
-        public string Price { get; set; }
+        public decimal Price { get; set; }  //Regex rgx = new Regex(@"[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]*\'?[0-9]+)+([-+]?[0-9]*\s?[0-9]+)?");
 
-        public string Kilometrage { get; set; }
+        public int Kilometrage { get; set; } // Regex rgx = new Regex(@"[-+]?[0-9]*\.?[0-9]+"); or have 'тис.км' => '000'
 
-        public string EngineСapacity { get; set; }
+        public double EngineСapacity { get; set; }//Regex rgx = new Regex(@"[-+]?[0-9]*\.?[0-9]+"); 
 
         public string City { get; set; }
 
         public string Plate { get; set; }
 
-        public string PublishDate { get; set; }
+        public DateTime PublishDate { get; set; }
 
-        public string GearBox { get; set; }
-
-        // public virtual CarBrand CarBrand { get; set; }
-        // public virtual CarType CarType { get; set; }
+        
+        public virtual CarGearbox CarGearbox { get; set; }
+        public virtual CarBrand CarBrand { get; set; }
+        public virtual CarType CarType { get; set; }
+        public virtual CarFuel CarFuel { get; set; }
+        public virtual CarModel CarModel { get; set; }
 
         public override bool Equals(object obj)
         {

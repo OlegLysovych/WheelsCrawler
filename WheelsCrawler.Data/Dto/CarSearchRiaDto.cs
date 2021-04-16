@@ -37,7 +37,7 @@ namespace WheelsCrawler.Data.Dto
         [WheelsCrawlerField(Expression = ".//*[contains(@class,'definition-data')]/ul[1]/li[3]", SelectorType = SelectorType.XPath)]
         public string EngineСapacity { get; set; }
 
-        [WheelsCrawlerField(Expression = ".//*[contains(@class,'definition-data')]/ul[1]/li[2]", SelectorType = SelectorType.XPath)]
+        [WheelsCrawlerField(Expression = ".//*[contains(@class,'definition-data')]/ul[1]/li[2]/text()[2]", SelectorType = SelectorType.XPath)]
         public string City { get; set; }
 
         [WheelsCrawlerField(Expression = ".//*[contains(@class,'base_information')]/span/text()", SelectorType = SelectorType.XPath)]

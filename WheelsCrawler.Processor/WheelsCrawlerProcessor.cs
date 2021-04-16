@@ -26,26 +26,27 @@ namespace WheelsCrawler.Processor
             List<NEntity> listEntities = new List<NEntity>();
             foreach (var nameValueDictionary in entitiesAtOnePage)
             {
-                var processorEntity = ReflectionHelper.CreateNewEntity<NEntity>();
+                var processorEntity = ReflectionHelper.CreateNewEntity<TEntity>();//need to be here crawl entity and before add check with mapping
 
                 foreach (var pair in nameValueDictionary)
                 {
                     ReflectionHelper.TrySetProperty(processorEntity, pair.Key, pair.Value);
                 }
 
-                var a = _repository.GetAll().AsEnumerable();
-                if (a.Count() == 0 || a.All(x => x.Equals(processorEntity) == false))
-                    listEntities.Add(processorEntity as NEntity);
+                var a = _repository.GetAll().AsEnumerable();//nentity
+
+                var config = new MapperConfiguration(c =>
+                {
+                    c.AddProfile<AutoMapperProfiles>();
+                });
+                IMapper mapper = new Mapper(config);
+                var entityToSave = mapper.Map<NEntity>(processorEntity as TEntity);
+
+                if (a.Count() == 0 || a.All(x => x.Equals(entityToSave) == false))//map for compare
+                    listEntities.Add(entityToSave);
             }
-            var config = new MapperConfiguration(c => c.CreateMap<NEntity, TEntity>());
-            IMapper mapper = new Mapper(config);
-            // var entityToSave =  mapper.Map<NEntity>(processorEntity); 
 
             return listEntities;
-            // return new List<NEntity>
-            // {
-            //     processorEntity as NEntity
-            // };
         }
 
         private static List<Dictionary<string, object>> GetColumnNameValuePairsFromHtml(HtmlDocument document)

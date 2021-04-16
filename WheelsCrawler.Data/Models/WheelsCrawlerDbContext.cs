@@ -20,6 +20,9 @@ namespace WheelsCrawler.Data.Models
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<CarType> CarTypes { get; set; }
         public virtual DbSet<CarBrand> CarBrands { get; set; }
+        public virtual DbSet<CarFuel> CarFuels { get; set; }
+        public virtual DbSet<CarGearbox> CarGearboxes { get; set; }
+        public virtual DbSet<CarModel> CarModels { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
