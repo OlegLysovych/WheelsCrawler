@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Data.Models
 {
-    public class CarType
+    public class CarType : IEntity
     {
         public CarType() => Cars = new HashSet<Car>();
         public int Id { get; set; }

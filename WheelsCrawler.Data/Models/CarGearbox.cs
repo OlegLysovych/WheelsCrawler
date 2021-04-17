@@ -1,6 +1,8 @@
+using WheelsCrawler.Data.Repository;
+
 namespace WheelsCrawler.Data.Models
 {
-    public class CarGearbox
+    public class CarGearbox : IEntity
     {
         public int Id { get; set; }
         public string WheelsName { get; set; }

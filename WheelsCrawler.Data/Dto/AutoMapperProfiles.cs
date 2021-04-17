@@ -34,6 +34,13 @@ namespace WheelsCrawler.Data.Dto
                 opt => opt.MapFrom(src => DoubleTypeConverter.Convert(src.EngineСapacity)))
                 .ForMember(destinationMember => destinationMember.PublishDate,
                 opt => opt.MapFrom(src => DateTimeTypeConverter.Convert(src.PublishDate)))
+                .ForMember(destinationMember => destinationMember.PictureUri,
+                opt => opt.MapFrom(src => src.PictureUri.Contains("thumb") ? src.PictureUri.Replace("thumb", "big") 
+                                        : src.PictureUri.Contains("middle") ? src.PictureUri.Replace("middle", "big") 
+                                        : src.PictureUri.Contains("small") ? src.PictureUri.Replace("small", "big") 
+                                        : src.PictureUri.Replace("ua", "ua")))
+                .ForMember(destinationMember => destinationMember.CarUri,
+                opt => opt.MapFrom(src => "https://rst.ua" + src.CarUri))
                 ;
             //Mobile
             CreateMap<CarMobileDto, Car>();
