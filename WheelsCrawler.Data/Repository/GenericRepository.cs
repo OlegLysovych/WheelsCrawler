@@ -18,6 +18,10 @@ namespace WheelsCrawler.Data.Repository
         {
             _dbContext = new WheelsCrawlerDbContext();            
         }
+        public GenericRepository(WheelsCrawlerDbContext dbContext)
+        {
+            _dbContext = dbContext;            
+        }
 
         public IQueryable<TEntity> GetAll()
         {
