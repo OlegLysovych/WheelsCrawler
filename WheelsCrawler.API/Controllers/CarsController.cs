@@ -17,10 +17,19 @@ namespace WheelsCrawler.API.Controllers
             _unityOfWork = unityOfWork;
         }
         [HttpGet]
-        public ActionResult<IEnumerable<Car>> GetCars()
+        public IEnumerable<Car> GetCars()
         {
             var cars = _unityOfWork.Repository<Car>().GetAll().AsEnumerable();
-            return Ok(cars);
+            return cars;
         }
+        // [HttpPost]
+        // public async Task<IActionResult> PostBrand()
+        // {
+        //     CarBrand carBrand = new CarBrand { WheelsName = "Kia", RiaName = "Kia", RstName = "Kia" };
+        //     var cars = _unityOfWork.Repository<CarBrand>().CreateAsync(carBrand);
+        //     if (await _unityOfWork.Repository<CarBrand>().SaveAll())
+        //         return Ok();
+        //     return BadRequest("failed to add new brand");
+        // }
     }
 }

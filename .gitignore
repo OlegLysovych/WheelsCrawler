@@ -1,6 +1,7 @@
 .vscode/
 .vs/
 htmls
+ssl
 
 *.db
 

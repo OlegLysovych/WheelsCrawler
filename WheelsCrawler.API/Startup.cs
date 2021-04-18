@@ -37,6 +37,7 @@ namespace WheelsCrawler.API
             WheelsCrawlerDbContext wheelsDbContext = serviceProvider.GetService<WheelsCrawlerDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>(uow => new UnitOfWork(wheelsDbContext));
             services.AddControllers();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +51,8 @@ namespace WheelsCrawler.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
 
             app.UseAuthorization();
 
