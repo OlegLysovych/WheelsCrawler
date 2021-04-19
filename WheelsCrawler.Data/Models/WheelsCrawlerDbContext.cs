@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Entity.Infrastructure;
 using System.Data.SQLite;
 using System.Reflection;
+using WheelsCrawler.Data.Models.Account;
 
 namespace WheelsCrawler.Data.Models
 {

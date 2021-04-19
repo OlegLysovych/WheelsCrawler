@@ -1,21 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WheelsCrawler.Data.Models;
 using WheelsCrawler.Data.unitOfWork;
 
 namespace WheelsCrawler.API.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CarsController : ControllerBase
+    public class CarsController : BaseApiController
     {
         private readonly IUnitOfWork _unityOfWork;
         public CarsController(IUnitOfWork unityOfWork)
         {
             _unityOfWork = unityOfWork;
         }
+        [Authorize]
         [HttpGet]
         public IEnumerable<Car> GetCars()
         {

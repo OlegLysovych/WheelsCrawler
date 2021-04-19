@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using WheelsCrawler.API.Extensions;
+using WheelsCrawler.API.Interfaces;
+using WheelsCrawler.API.Services;
 using WheelsCrawler.Data.Models;
 using WheelsCrawler.Data.unitOfWork;
 
@@ -29,15 +35,12 @@ namespace WheelsCrawler.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<WheelsCrawlerDbContext>(options =>
-            {
-                options.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            });
-            ServiceProvider serviceProvider = services.BuildServiceProvider();
-            WheelsCrawlerDbContext wheelsDbContext = serviceProvider.GetService<WheelsCrawlerDbContext>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>(uow => new UnitOfWork(wheelsDbContext));
+            services.AddApplicationServices(_config);
+            
             services.AddControllers();
             services.AddCors();
+
+            services.AddIdentityServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +56,8 @@ namespace WheelsCrawler.API
             app.UseRouting();
 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
