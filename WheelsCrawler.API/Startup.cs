@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using WheelsCrawler.API.Extensions;
 using WheelsCrawler.API.Interfaces;
+using WheelsCrawler.API.Middleware;
 using WheelsCrawler.API.Services;
 using WheelsCrawler.Data.Models;
 using WheelsCrawler.Data.unitOfWork;
@@ -44,10 +45,13 @@ namespace WheelsCrawler.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+
+            app.UseMiddleware<ExceptionMiddleware>();
+            
+            // if (env.IsDevelopment())
+            // {
+            //     app.UseDeveloperExceptionPage();
+            // }
 
             app.UseHttpsRedirection();
 

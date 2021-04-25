@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { CarListDetailedComponent } from './car-list-detailed/car-list-detailed.component';
 import { CarListComponent } from './car-list/car-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
 import { SearchListComponent } from './search-list/search-list.component';
 import { AuthGuard } from './_guards/auth.guard';
@@ -20,7 +23,10 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},    
     ]
   },
-  {path: '**', component: HomeComponent, pathMatch: 'full'},
+  {path: 'errors', component: TestErrorsComponent},    
+  {path: 'not-found', component: NotFoundComponent},    
+  {path: 'server-error', component: ServerErrorComponent},    
+  {path: '**', component: NotFoundComponent, pathMatch: 'full'},
 ];
 
 @NgModule({
