@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Data.Models.Account
@@ -8,5 +9,6 @@ namespace WheelsCrawler.Data.Models.Account
         public string UserName { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public ICollection<Url> InterestedUrls { get; set; }
     }
 }
