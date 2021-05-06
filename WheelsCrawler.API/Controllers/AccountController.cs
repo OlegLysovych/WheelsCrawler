@@ -3,11 +3,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WheelsCrawler.API.DTOs;
 using WheelsCrawler.Data.Models.Account;
 using WheelsCrawler.Data.unitOfWork;
 using Microsoft.EntityFrameworkCore;
 using WheelsCrawler.API.Interfaces;
+using System.Collections.Generic;
+using WheelsCrawler.Data.Dto;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WheelsCrawler.API.Controllers
 {
@@ -15,9 +18,11 @@ namespace WheelsCrawler.API.Controllers
     {
         private readonly IUnitOfWork _unityOfWork;
         private readonly ITokenService _tokenService;
+        private readonly IMapper _mapper;
 
-        public AccountController(IUnitOfWork unityOfWork, ITokenService tokenService)
+        public AccountController(IUnitOfWork unityOfWork, ITokenService tokenService, IMapper mapper)
         {
+            _mapper = mapper;
             _tokenService = tokenService;
             _unityOfWork = unityOfWork;
         }
@@ -78,6 +83,24 @@ namespace WheelsCrawler.API.Controllers
                 Token = _tokenService.CreateToken(user)
             };
 
+        }
+
+        [Authorize]
+        [HttpGet("users/{id}")]
+        public async Task<ActionResult<MemberDTO>> GetUser(int id)
+        {
+            var member = await _unityOfWork.Repository<User>().GetById(id);
+            var memberToReturn = _mapper.Map<MemberDTO>(member);
+            return memberToReturn;
+        }
+
+        [Authorize]
+        [HttpGet("Users")]
+        public ActionResult<IEnumerable<MemberDTO>> GetUsers()
+        {
+            var members = _unityOfWork.Users.GetAll();
+            var membersToRetrun = _mapper.Map<IEnumerable<MemberDTO>>(members);
+            return Ok(membersToRetrun);
         }
 
     }

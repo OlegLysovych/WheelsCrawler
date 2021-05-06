@@ -25,11 +25,28 @@ export class AppComponent implements OnInit {
     private renderer: Renderer2,
     private router: Router,
     @Inject(DOCUMENT) private document: any,
-    private element: ElementRef,
+    private element: ElementRef
   ) {}
 
   ngOnInit() {
-    
+    var navbar: HTMLElement = this.element.nativeElement.children[0]
+      .children[0];
+
+    if (localStorage.getItem('user')) this.setCurrentUser();
+
+    this.renderer.listen('window', 'scroll', (event) => {
+      const number = window.scrollY;
+      if (
+        (this.router.url !== '/' && number > 150) ||
+        window.pageYOffset > 150
+      ) {
+        // add logic
+        navbar.classList.remove('navbar-transparent');
+      } else {
+        // remove logic
+        if (this.router.url === '/') navbar.classList.add('navbar-transparent');
+      }
+    });
   }
 
   setCurrentUser() {

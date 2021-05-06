@@ -15,9 +15,10 @@ export class NavComponent implements OnInit {
   private toggleButton: any;
   private sidebarVisible: boolean;
 
+
   constructor(
     public accountService: AccountService,
-    private router: Router,
+    public router: Router,
     private toastr: ToastrService,
     private element: ElementRef
   ) {
@@ -36,6 +37,11 @@ export class NavComponent implements OnInit {
       }
     );
   }
+  setCurrentUser() {
+    const user: User = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
+    this.accountService.setCurrentUser(user);
+  }
 
   logOut() {
     this.accountService.logOut();
@@ -45,6 +51,10 @@ export class NavComponent implements OnInit {
 
   toggleNavbar() {
     this.navbarOpen = !this.navbarOpen;
+  }
+
+  isHomePage() {
+    return this.router.url === '/';
   }
 
   sidebarOpen() {

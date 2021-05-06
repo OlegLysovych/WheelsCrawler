@@ -1,4 +1,4 @@
-namespace WheelsCrawler.API.DTOs
+namespace WheelsCrawler.Data.Dto
 {
     public class LoginDTO
     {

@@ -6,10 +6,12 @@ using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Data.unitOfWork
 {
-    public class UnitOfWork: IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly WheelsCrawlerDbContext _dbContext;
         private Hashtable _repositories;
+        private IAccountRepository accountRepository;
+        private ICarRepository carRepository;
         public UnitOfWork(WheelsCrawlerDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -33,6 +35,25 @@ namespace WheelsCrawler.Data.unitOfWork
             }
 
             return (IGenericRepository<TEntity>)_repositories[type];
+        }
+
+        public IAccountRepository Users
+        {
+            get
+            {
+                if (accountRepository == null)
+                    accountRepository = new AccountRepository(_dbContext);
+                return accountRepository;
+            }
+        }
+        public ICarRepository Cars
+        {
+            get
+            {
+                if (carRepository == null)
+                    carRepository = new CarRepository(_dbContext);
+                return carRepository;
+            }
         }
     }
 }

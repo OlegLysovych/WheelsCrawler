@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using AutoMapper;
 using WheelsCrawler.Data.Models;
+using WheelsCrawler.Data.Models.Account;
 
 namespace WheelsCrawler.Data.Dto
 {
@@ -35,9 +36,9 @@ namespace WheelsCrawler.Data.Dto
                 .ForMember(destinationMember => destinationMember.PublishDate,
                 opt => opt.MapFrom(src => DateTimeTypeConverter.Convert(src.PublishDate)))
                 .ForMember(destinationMember => destinationMember.PictureUri,
-                opt => opt.MapFrom(src => src.PictureUri.Contains("thumb") ? src.PictureUri.Replace("thumb", "big") 
-                                        : src.PictureUri.Contains("middle") ? src.PictureUri.Replace("middle", "big") 
-                                        : src.PictureUri.Contains("small") ? src.PictureUri.Replace("small", "big") 
+                opt => opt.MapFrom(src => src.PictureUri.Contains("thumb") ? src.PictureUri.Replace("thumb", "big")
+                                        : src.PictureUri.Contains("middle") ? src.PictureUri.Replace("middle", "big")
+                                        : src.PictureUri.Contains("small") ? src.PictureUri.Replace("small", "big")
                                         : src.PictureUri.Replace("ua", "ua")))
                 .ForMember(destinationMember => destinationMember.CarUri,
                 opt => opt.MapFrom(src => "https://rst.ua" + src.CarUri))
@@ -45,16 +46,23 @@ namespace WheelsCrawler.Data.Dto
             //Mobile
             CreateMap<CarMobileDto, Car>();
 
-            // CreateMap<string, int>().ConvertUsing<IntTypeConverter>();
-            // CreateMap<string, int?>().ConvertUsing<NullIntTypeConverter>();
-            // CreateMap<string, decimal?>().ConvertUsing<NullDecimalTypeConverter>();
-            // CreateMap<string, decimal>().ConvertUsing<DecimalTypeConverter>();
-            // CreateMap<string, bool?>().ConvertUsing<NullBooleanTypeConverter>();
-            // CreateMap<string, bool>().ConvertUsing<BooleanTypeConverter>();
-            // CreateMap<string, Int64?>().ConvertUsing<NullInt64TypeConverter>();
-            // CreateMap<string, Int64>().ConvertUsing<Int64TypeConverter>();
-            // CreateMap<string, DateTime?>().ConvertUsing<NullDateTimeTypeConverter>();
-            // CreateMap<string, DateTime>().ConvertUsing<DateTimeTypeConverter>();
+            //Client side
+            CreateMap<User, MemberDTO>();
+            CreateMap<Car, CarDto>()
+                .ForMember(destinationMember => destinationMember.Publishdate,
+                opt => opt.MapFrom(src => src.PublishDate.ToShortDateString()))
+                .ForMember(destinationMember => destinationMember.Enginecapacity,
+                opt => opt.MapFrom(src => src.EngineСapacity))
+                .ForMember(destinationMember => destinationMember.Cargearbox,
+                opt => opt.MapFrom(src => src.CarGearbox.WheelsName.ToString()))
+                .ForMember(destinationMember => destinationMember.Carbrand,
+                opt => opt.MapFrom(src => src.CarBrand.WheelsName.ToString()))
+                .ForMember(destinationMember => destinationMember.Cartype,
+                opt => opt.MapFrom(src => src.CarType.WheelsName.ToString()))
+                .ForMember(destinationMember => destinationMember.Carfuel,
+                opt => opt.MapFrom(src => src.CarFuel.WheelsName.ToString()))
+                .ForMember(destinationMember => destinationMember.Carmodel,
+                opt => opt.MapFrom(src => src.CarModel.WheelsName.ToString()));
         }
     }
 

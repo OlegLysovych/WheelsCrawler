@@ -1,0 +1,12 @@
+<div class="form-group">
+  <input
+    [class.is-invalid]="ngControl.touched && ngControl.invalid"
+    type="{{type}}"
+    class="form-control"
+    formControl
+    placeholder="{{label}}"
+  />
+  <div *ngIf="registerForm.get('password').hasError('required')" class="invalid-feedback">Введіть пароль користувача, будь ласка</div>
+  <div *ngIf="registerForm.get('password').hasError('minlength')" class="invalid-feedback">Пароль повинен містити щонайменше 5 символів</div>
+  <div *ngIf="registerForm.get('password').hasError('maxlength')" class="invalid-feedback">Пароль повинен містити не більше 10 символів</div>
+</div>

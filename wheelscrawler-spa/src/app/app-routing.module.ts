@@ -11,26 +11,26 @@ import { SearchListComponent } from './search-list/search-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  { path: '', component: HomeComponent },
   {
     path: '',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      {path: 'cars', component: CarListComponent, canActivate: [AuthGuard]},
-      {path: 'cars/:id', component: CarListDetailedComponent},
-      {path: 'search', component: SearchListComponent},
-      {path: 'dashboard', component: DashboardComponent},    
-    ]
+      { path: 'cars', component: CarListComponent },
+      { path: 'cars/:id', component: CarListDetailedComponent },
+      { path: 'search', component: SearchListComponent },
+      { path: 'dashboard', component: DashboardComponent },
+    ],
   },
   {path: 'errors', component: TestErrorsComponent},    
   {path: 'not-found', component: NotFoundComponent},    
   {path: 'server-error', component: ServerErrorComponent},    
-  {path: '**', component: NotFoundComponent, pathMatch: 'full'},
+  { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

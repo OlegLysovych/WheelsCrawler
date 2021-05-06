@@ -18,11 +18,11 @@ namespace WheelsCrawler.Data.Models
 
         public string CarUri { get; set; }
 
-        public decimal Price { get; set; }  //Regex rgx = new Regex(@"[-+]?[0-9]*\.?[0-9]+([-+]?[0-9]*\'?[0-9]+)+([-+]?[0-9]*\s?[0-9]+)?");
+        public decimal Price { get; set; }
 
-        public int Kilometrage { get; set; } // Regex rgx = new Regex(@"[-+]?[0-9]*\.?[0-9]+"); or have 'тис.км' => '000'
+        public int Kilometrage { get; set; }
 
-        public double EngineСapacity { get; set; }//Regex rgx = new Regex(@"[-+]?[0-9]*\.?[0-9]+"); 
+        public double EngineСapacity { get; set; } 
 
         public string City { get; set; }
 

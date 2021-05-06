@@ -1,0 +1,74 @@
+<div class="card card-cover overflow-hidden h-100 text-white bg-white rounded-5 shadow-lg mt-3" style="position: static; break-inside: avoid">
+  <!-- style="background-image: url({{car.pictureUri}}); background: none no-repeat center center / cover;" -->
+  <a href="{{car.carUri}}" target="_blank" class="mb-0">
+    <div class="d-flex flex-column px-5 w-100 h-90 overflow-hidden pb-1 text-white text-shadow-1 rounded-5"style="background-image: url({{car.pictureUri}}); border-radius: 5px; background: none no-repeat center center / cover; break-inside: avoid;">
+      <h2 class="pt-5 mt-5 mb-2 display-6 lh-1 fw-bold">{{car.name}}</h2>
+    </div>
+  </a>
+  <div class="mask-custom">
+    <ul class="d-flex list-unstyled pt-3 mb-0">
+      <li class="d-flex align-items-center me-3">
+        <i class="fa fa-building-o" aria-hidden="true"></i>
+        <small>{{ car.city }}</small>
+      </li>
+      <li class="d-flex align-items-center">
+        <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+        <small>{{ car.kilometrage }} тис. км</small>
+      </li>
+      <li class="d-flex align-items-center">
+        <i class="fa fa-building-o" aria-hidden="true"></i>
+        <small>{{ car.enginecapacity }} л.</small>
+      </li>
+      <li class="me-auto">
+        {{car.carfuel}}
+      </li>
+      <li class="d-flex align-items-center">
+        <i class="fa fa-building-o" aria-hidden="true"></i>
+        <span _ngcontent-c3="" *ngIf="car.plate && car.plate?.length < 11" class="label label-default">{{car.plate}}</span>
+      </li>
+    </ul>
+    <div class="card-body py-2">
+      <h5 class="card-title text-white">$ {{ car.price }}</h5>
+      <div class="card-text" *ngIf="car.description">
+        <div [ngClass]="{'show-less': showShortDesciption}">
+          {{car.description}}
+        </div>        
+        <div *ngIf="car.description.length > 119">
+          <button class="btn btn-link btn-primary btn-sm px-0" (click)="alterDescriptionText()">
+            {{ showShortDesciption ? 'SHOW MORE': 'SHOW LESS' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer py-1 d-flex justify-content-between">
+      <small class="text-light">{{ car.publishdate }}</small>
+      <img
+          src="{{ this.sourceLogo(car) }}"
+          alt="Source service logo"
+          width="42"
+          height="42"
+          class="rounded-circle border border-white"
+        />
+    </div>
+  </div>
+</div>
+
+<!-- <div class="card card-blog">
+    <div class="card-image">
+        <a href="#"> <img class="img" src="{{car.pictureUri}}"> </a>
+        <div class="ripple-cont"></div>
+    </div>
+    <div class="table">
+        <h6 class="category text-success"><i class="fa fa-car"></i> Law</h6>
+        <h4 class="card-caption">
+    <a href="#">Vivamus odio ante, feugiat eget nisi sit amet, dignissim velit</a>
+</h4>
+        <p class="card-description"> Lorem ipsum dolor sit amet, consectetur adipis cingelit. Etiam lacinia elit et placerat finibus.</p>
+        <div class="ftr">
+            <div class="author">
+                <a href="#"> <img src="{{sourceLogo(car)}}" alt="..." class="avatar img-raised"  width="42" height="42" > <span>Mary Dunst</span> </a>
+            </div>
+            <div class="stats"> <i class="fa fa-clock-o"></i> 10 min </div>
+        </div>
+    </div>
+</div> -->
