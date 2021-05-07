@@ -18,7 +18,7 @@ namespace WheelsCrawler.Data.Models
 
         public string CarUri { get; set; }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public int Kilometrage { get; set; }
 
@@ -36,6 +36,7 @@ namespace WheelsCrawler.Data.Models
         public virtual CarType CarType { get; set; }
         public virtual CarFuel CarFuel { get; set; }
         public virtual CarModel CarModel { get; set; }
+        public virtual Url RelatedQueryUrl { get; set; }
 
         public override bool Equals(object obj)
         {

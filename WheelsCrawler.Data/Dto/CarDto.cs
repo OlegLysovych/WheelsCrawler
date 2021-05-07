@@ -14,7 +14,7 @@ namespace WheelsCrawler.Data.Dto
 
         public string CarUri { get; set; }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public int Kilometrage { get; set; }
 
