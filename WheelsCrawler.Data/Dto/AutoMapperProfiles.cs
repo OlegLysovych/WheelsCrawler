@@ -16,7 +16,7 @@ namespace WheelsCrawler.Data.Dto
             CreateMap<CarPageRiaDto, Car>();
             CreateMap<CarSearchRiaDto, Car>()
                 .ForMember(destinationMember => destinationMember.Price,
-                opt => opt.MapFrom(src => DecimalTypeConverter.Convert(src.Price)))
+                opt => opt.MapFrom(src => DoubleTypeConverter.Convert(src.Price)))
                 .ForMember(destinationMember => destinationMember.Kilometrage,
                 opt => opt.MapFrom(src => IntTypeConverter.Convert(src.Kilometrage)))
                 .ForMember(destinationMember => destinationMember.EngineСapacity,
@@ -28,7 +28,7 @@ namespace WheelsCrawler.Data.Dto
             CreateMap<CarPageRstDto, Car>();
             CreateMap<CarSearchRstDto, Car>()
                 .ForMember(destinationMember => destinationMember.Price,
-                opt => opt.MapFrom(src => DecimalTypeConverter.Convert(src.Price)))
+                opt => opt.MapFrom(src => DoubleTypeConverter.Convert(src.Price)))
                 .ForMember(destinationMember => destinationMember.Kilometrage,
                 opt => opt.MapFrom(src => IntTypeConverter.Convert(src.Kilometrage)))
                 .ForMember(destinationMember => destinationMember.EngineСapacity,

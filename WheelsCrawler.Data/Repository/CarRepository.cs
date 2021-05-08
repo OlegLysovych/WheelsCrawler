@@ -1,6 +1,7 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using WheelsCrawler.Data.Helpers;
 using WheelsCrawler.Data.Models;
 
 namespace WheelsCrawler.Data.Repository
@@ -14,9 +15,12 @@ namespace WheelsCrawler.Data.Repository
         {
         }
 
-         public new IQueryable<Car> GetAll()
+         public async Task<IQueryable<Car>> GetAll(UserParams userParams)
         {
-            return _dbContext.Cars.AsNoTracking();
+            var query = _dbContext.Cars.AsNoTracking();
+            return query;
+            
+            // return await PagedList<Car>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
         public new async Task<Car> GetById(int id)

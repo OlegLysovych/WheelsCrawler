@@ -11,10 +11,10 @@ namespace WheelsCrawler.Data.Repository
     {
         // private readonly WheelsCrawlerDbContext _dbContext;
 
-        public AccountRepository(): base ()
+        public AccountRepository() : base()
         {
         }
-        public AccountRepository(WheelsCrawlerDbContext dbContext): base(dbContext)
+        public AccountRepository(WheelsCrawlerDbContext dbContext) : base(dbContext)
         {
         }
 
@@ -30,6 +30,13 @@ namespace WheelsCrawler.Data.Repository
                         .Where(x => x.Id == id)
                         .AsNoTracking()
                         .SingleAsync();
+        }
+
+        public  User GetByUsername(string username)
+        {
+            return  _dbContext.Users.Include(x => x.InterestedUrls)
+                                         .Where(x => x.UserName == username)
+                                         .Single();
         }
     }
 }
