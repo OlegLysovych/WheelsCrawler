@@ -22,6 +22,12 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { CarsCardComponent } from './cars-card/cars-card.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { UrlManagementComponent } from './admin/url-management/url-management.component';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({
   declarations: [
@@ -37,6 +43,11 @@ import { CarsCardComponent } from './cars-card/cars-card.component';
     NotFoundComponent,
     ServerErrorComponent,
     CarsCardComponent,
+    AdminPanelComponent,
+    HasRoleDirective,
+    UserManagementComponent,
+    UrlManagementComponent,
+    RolesModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +57,7 @@ import { CarsCardComponent } from './cars-card/cars-card.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    FontAwesomeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

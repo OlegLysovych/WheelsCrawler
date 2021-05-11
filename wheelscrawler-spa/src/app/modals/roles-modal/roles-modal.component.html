@@ -1,0 +1,41 @@
+<div class="modal-content">
+  <div class="modal-header py-0">
+    <h4 class="modal-title pull-left">
+      Редагувати ролі для {{ user.username }}
+    </h4>
+    <button
+      type="button"
+      class="close mt-2"
+      aria-label="Close"
+      (click)="bsModalRef.hide()"
+    >
+      <span class="fa fa-close"></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #rolesForm="ngForm" id="rolesForm">
+      <div class="form-check" *ngFor="let role of roles">
+        <label class="form-check-label">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [checked]="role.checked"
+            value="role.name"
+            (change)="role.checked = !role.checked"
+            [disabled]="role.name === 'Admin' && user.username === 'admin'"
+          />
+          {{ role.name }}
+          <span class="form-check-sign"></span>
+        </label>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer my-2 mx-1">
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">
+      Відміна
+    </button>
+    <button type="button" class="btn btn-success" (click)="updateRoles()">
+      Підтвердити
+    </button>
+  </div>
+</div>

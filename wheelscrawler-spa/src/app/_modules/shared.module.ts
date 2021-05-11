@@ -4,6 +4,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 
@@ -16,13 +18,17 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
       positionClass: 'toast-bottom-right'
     }),
     PaginationModule.forRoot(),
-    ButtonsModule.forRoot()
-  ],
+    ButtonsModule.forRoot(),
+    TabsModule.forRoot(),
+    ModalModule.forRoot()
+    ],
   exports: [
     BsDropdownModule,
     ToastrModule,
     PaginationModule,
-    ButtonsModule
+    ButtonsModule,
+    TabsModule,
+    ModalModule
   ],
 })
 export class SharedModule { }

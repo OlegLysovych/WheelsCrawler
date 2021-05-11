@@ -47,6 +47,14 @@
               >Dashboard</a
             >
           </li>
+          <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
+            <a
+              class="nav-link"
+              routerLink="/admin"
+              routerLinkActive="active"
+              >Admin</a
+            >
+          </li>
         </ng-container>
       </ul>
       <div
