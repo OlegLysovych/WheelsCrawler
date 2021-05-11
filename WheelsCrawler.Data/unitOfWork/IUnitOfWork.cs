@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using WheelsCrawler.Data.Models.Account;
 using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Data.unitOfWork

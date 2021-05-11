@@ -31,6 +31,8 @@ namespace WheelsCrawler.API.Controllers
         {
             var cars = await _unityOfWork.Cars.GetAll(userParams);
 
+            //TODO: move all this stuff to service!!!!!!!!!!!!
+
             var currentUserName = User.GetUserName();
             var user = _unityOfWork.Users.GetByUsername(currentUserName);
 

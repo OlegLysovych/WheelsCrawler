@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WheelsCrawler.Data.Models;
+using WheelsCrawler.Data.Models.Account;
 using WheelsCrawler.Data.Repository;
 
 namespace WheelsCrawler.Data.unitOfWork
@@ -12,6 +15,9 @@ namespace WheelsCrawler.Data.unitOfWork
         private Hashtable _repositories;
         private IAccountRepository accountRepository;
         private ICarRepository carRepository;
+
+        private IAccManager userManager;
+        private AppRole roleManager;
         public UnitOfWork(WheelsCrawlerDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -55,5 +61,6 @@ namespace WheelsCrawler.Data.unitOfWork
                 return carRepository;
             }
         }
+
     }
 }

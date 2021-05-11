@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WheelsCrawler.Data.Models;
 
 namespace WheelsCrawler.Data.Migrations
 {
     [DbContext(typeof(WheelsCrawlerDbContext))]
-    partial class WheelsCrawlerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210511101101_User_Url_RelationFix")]
+    partial class User_Url_RelationFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

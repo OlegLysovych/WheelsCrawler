@@ -18,7 +18,9 @@ namespace WheelsCrawler.API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddDbContext<WheelsCrawlerDbContext>(options =>
             {
-                options.UseLazyLoadingProxies().UseSqlite(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WheelsCrawler.Data"));
+                options.UseLazyLoadingProxies().UseSqlite(config.GetConnectionString("DefaultConnection"),
+                // b => b.MigrationsAssembly("WheelsCrawler.Data")
+                assembly => assembly.MigrationsAssembly(typeof(WheelsCrawlerDbContext).Assembly.FullName));
             });
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 

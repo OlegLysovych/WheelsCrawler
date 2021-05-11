@@ -1,0 +1,80 @@
+[
+    {
+        "Id": 1,
+        "RiaName": "volkswagen",
+        "RstName": "volkswagen",
+        "WheelsName": "Volkswagen"
+    },
+    {
+        "Id": 2,
+        "RiaName": "mercedes-benz",
+        "RstName": "mercedes",
+        "WheelsName": "Mercedes"
+    },
+    {
+        "Id": 3,
+        "RiaName": "renault",
+        "RstName": "renault",
+        "WheelsName": "Renault"
+    },
+    {
+        "Id": 4,
+        "RiaName": "ford",
+        "RstName": "ford",
+        "WheelsName": "Ford"
+    },
+    {
+        "Id": 5,
+        "RiaName": "opel",
+        "RstName": "opel",
+        "WheelsName": "Opel"
+    },
+    {
+        "Id": 6,
+        "RiaName": "skoda",
+        "RstName": "skoda",
+        "WheelsName": "Skoda"
+    },
+    {
+        "Id": 7,
+        "RiaName": "bmw",
+        "RstName": "bmw",
+        "WheelsName": "Bmw"
+    },
+    {
+        "Id": 8,
+        "RiaName": "toyota",
+        "RstName": "toyota",
+        "WheelsName": "Toyota"
+    },
+    {
+        "Id": 9,
+        "RiaName": "nissan",
+        "RstName": "nissan",
+        "WheelsName": "Nissan"
+    },
+    {
+        "Id": 10,
+        "RiaName": "honda",
+        "RstName": "honda",
+        "WheelsName": "Honda"
+    },
+    {
+        "Id": 11,
+        "RiaName": "audi",
+        "RstName": "audi",
+        "WheelsName": "Audi"
+    },
+    {
+        "Id": 12,
+        "RiaName": "lexus",
+        "RstName": "lexus",
+        "WheelsName": "Lexus"
+    },
+    {
+        "Id": 13,
+        "RiaName": "jeep",
+        "RstName": "jeep",
+        "WheelsName": "Jeep"
+    }
+]

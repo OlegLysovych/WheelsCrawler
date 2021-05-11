@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WheelsCrawler.Data.Models;
 
 namespace WheelsCrawler.Data.Migrations
 {
     [DbContext(typeof(WheelsCrawlerDbContext))]
-    partial class WheelsCrawlerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210510141847_IdentityAdded")]
+    partial class IdentityAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,21 +100,6 @@ namespace WheelsCrawler.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("UrlUser", b =>
-                {
-                    b.Property<int>("InterestedUrlsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("InterestedUsersId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("InterestedUrlsId", "InterestedUsersId");
-
-                    b.HasIndex("InterestedUsersId");
-
-                    b.ToTable("UrlUser");
                 });
 
             modelBuilder.Entity("WheelsCrawler.Data.Models.Account.AppRole", b =>
@@ -359,7 +346,7 @@ namespace WheelsCrawler.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CarBrandId")
+                    b.Property<int?>("CarBrandId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RiaName")
@@ -407,7 +394,12 @@ namespace WheelsCrawler.Data.Migrations
                     b.Property<string>("UrlToScrape")
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Urls");
                 });
@@ -444,21 +436,6 @@ namespace WheelsCrawler.Data.Migrations
                     b.HasOne("WheelsCrawler.Data.Models.Account.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("UrlUser", b =>
-                {
-                    b.HasOne("WheelsCrawler.Data.Models.Url", null)
-                        .WithMany()
-                        .HasForeignKey("InterestedUrlsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WheelsCrawler.Data.Models.Account.User", null)
-                        .WithMany()
-                        .HasForeignKey("InterestedUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -525,11 +502,16 @@ namespace WheelsCrawler.Data.Migrations
                 {
                     b.HasOne("WheelsCrawler.Data.Models.CarBrand", "CarBrand")
                         .WithMany("CarModels")
-                        .HasForeignKey("CarBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CarBrandId");
 
                     b.Navigation("CarBrand");
+                });
+
+            modelBuilder.Entity("WheelsCrawler.Data.Models.Url", b =>
+                {
+                    b.HasOne("WheelsCrawler.Data.Models.Account.User", null)
+                        .WithMany("InterestedUrls")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("WheelsCrawler.Data.Models.Account.AppRole", b =>
@@ -539,6 +521,8 @@ namespace WheelsCrawler.Data.Migrations
 
             modelBuilder.Entity("WheelsCrawler.Data.Models.Account.User", b =>
                 {
+                    b.Navigation("InterestedUrls");
+
                     b.Navigation("UserRoles");
                 });
 

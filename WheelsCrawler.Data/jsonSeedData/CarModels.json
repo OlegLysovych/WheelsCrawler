@@ -1,0 +1,261 @@
+[
+    {
+        "CarBrandId": 1,
+        "Id": 1,
+        "RiaName": "passat",
+        "RstName": "passat",
+        "WheelsName": "Passat"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 2,
+        "RiaName": "golf",
+        "RstName": "golf",
+        "WheelsName": "Golf"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 3,
+        "RiaName": "touareg",
+        "RstName": "touareg",
+        "WheelsName": "Touareg"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 4,
+        "RiaName": "tiguan",
+        "RstName": "tiguan",
+        "WheelsName": "Tiguan"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 5,
+        "RiaName": "touran",
+        "RstName": "touran",
+        "WheelsName": "Touran"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 6,
+        "RiaName": "polo",
+        "RstName": "polo",
+        "WheelsName": "Polo"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 7,
+        "RiaName": "cc",
+        "RstName": "cc",
+        "WheelsName": "CC"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 8,
+        "RiaName": "sharan",
+        "RstName": "sharan",
+        "WheelsName": "Sharan"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 9,
+        "RiaName": "jetta",
+        "RstName": "jetta",
+        "WheelsName": "Jetta"
+    },
+    {
+        "CarBrandId": 1,
+        "Id": 10,
+        "RiaName": "transporter",
+        "RstName": "transporter",
+        "WheelsName": "Transporter"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 11,
+        "RiaName": "a-class",
+        "RstName": "a-class",
+        "WheelsName": "A-class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 12,
+        "RiaName": "b-class",
+        "RstName": "b-class",
+        "WheelsName": "B-class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 13,
+        "RiaName": "c-class",
+        "RstName": "c-class",
+        "WheelsName": "C-class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 14,
+        "RiaName": "e-class",
+        "RstName": "e-class",
+        "WheelsName": "E-class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 15,
+        "RiaName": "g-class",
+        "RstName": "g-class",
+        "WheelsName": "G-Class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 16,
+        "RiaName": "gl-class",
+        "RstName": "gl",
+        "WheelsName": "GL-Class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 17,
+        "RiaName": "gle-class",
+        "RstName": "gle",
+        "WheelsName": "GLE-class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 18,
+        "RiaName": "glk-class",
+        "RstName": "glk",
+        "WheelsName": "GLK-class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 19,
+        "RiaName": "s-class",
+        "RstName": "s-class",
+        "WheelsName": "S-Class"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 20,
+        "RiaName": "sprinter",
+        "RstName": "sprinter",
+        "WheelsName": "Sprinter"
+    },
+    {
+        "CarBrandId": 2,
+        "Id": 21,
+        "RiaName": "vito",
+        "RstName": "vito",
+        "WheelsName": "Vito"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 22,
+        "RiaName": "megane",
+        "RstName": "megane",
+        "WheelsName": "Megane"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 23,
+        "RiaName": "kangoo",
+        "RstName": "kangoo",
+        "WheelsName": "Kangoo"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 24,
+        "RiaName": "scenic",
+        "RstName": "scenic",
+        "WheelsName": "Scenic"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 25,
+        "RiaName": "laguna",
+        "RstName": "laguna",
+        "WheelsName": "Laguna"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 26,
+        "RiaName": "trafic",
+        "RstName": "trafic",
+        "WheelsName": "Trafic"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 27,
+        "RiaName": "clio",
+        "RstName": "clio",
+        "WheelsName": "Clio"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 28,
+        "RiaName": "logan",
+        "RstName": "logan",
+        "WheelsName": "Logan"
+    },
+    {
+        "CarBrandId": 3,
+        "Id": 29,
+        "RiaName": "duster",
+        "RstName": "duster",
+        "WheelsName": "Duster"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 30,
+        "RiaName": "focus",
+        "RstName": "focus",
+        "WheelsName": "Focus"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 31,
+        "RiaName": "fusion",
+        "RstName": "fusion",
+        "WheelsName": "Fusion"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 32,
+        "RiaName": "mondeo",
+        "RstName": "mondeo",
+        "WheelsName": "Mondeo"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 33,
+        "RiaName": "fiesta",
+        "RstName": "fiesta",
+        "WheelsName": "Fiesta"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 34,
+        "RiaName": "kuga",
+        "RstName": "kuga",
+        "WheelsName": "Kuga"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 35,
+        "RiaName": "transit",
+        "RstName": "transit",
+        "WheelsName": "Transit"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 36,
+        "RiaName": "mustang",
+        "RstName": "mustang",
+        "WheelsName": "Mustang"
+    },
+    {
+        "CarBrandId": 4,
+        "Id": 37,
+        "RiaName": "s-max",
+        "RstName": "s-max",
+        "WheelsName": "S-max"
+    }
+]

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 // using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -7,15 +9,17 @@ using WheelsCrawler.Data.Models.Account;
 
 namespace WheelsCrawler.Data.Models
 {
-    public partial class WheelsCrawlerDbContext : DbContext
+    public partial class WheelsCrawlerDbContext : IdentityDbContext<User, AppRole, int,
+                                                                    IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>,
+                                                                    IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public WheelsCrawlerDbContext()
         {
-            
+
         }
         public WheelsCrawlerDbContext(DbContextOptions<WheelsCrawlerDbContext> options) : base(options)
         {
-            
+
         }
 
         public virtual DbSet<Car> Cars { get; set; }
@@ -24,7 +28,7 @@ namespace WheelsCrawler.Data.Models
         public virtual DbSet<CarFuel> CarFuels { get; set; }
         public virtual DbSet<CarGearbox> CarGearboxes { get; set; }
         public virtual DbSet<CarModel> CarModels { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Url> Urls { get; set; }
 
 //         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //         {
@@ -37,20 +41,24 @@ namespace WheelsCrawler.Data.Models
 //                  options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
 //                  options.UseRelationalNulls(false);
 //              });
-//             base.OnConfiguring(optionsBuilder);
+//                 base.OnConfiguring(optionsBuilder);
 //             }
 //         }
-        
-        // protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        // {
-        //     throw new UnintentionalCodeFirstException();
-        //     modelBuilder.Entity<Car>(entity =>
-        //     {
-        //         entity.HasKey(k => k.Id);
-        //         entity.HasIndex(e => e.CarBrandId);
-        //         entity.HasIndex(e => e.CarTypeId);
-        //         entity.Property(e => e.Id)
-        //     })
-        // }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.User)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+        }
     }
 }

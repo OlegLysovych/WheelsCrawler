@@ -23,6 +23,8 @@ using WheelsCrawler.Data.unitOfWork;
 
 namespace WheelsCrawler.API
 {
+
+    //dotnet ef migrations add IdentityAdded --project ..\WheelsCrawler.Data\WheelsCrawler.Data.csproj --startup-project .\WheelsCrawler.API.csproj
     public class Startup
     {
         private readonly IConfiguration _config;

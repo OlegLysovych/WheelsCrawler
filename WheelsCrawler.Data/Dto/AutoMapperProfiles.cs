@@ -47,7 +47,8 @@ namespace WheelsCrawler.Data.Dto
             CreateMap<CarMobileDto, Car>();
 
             //Client side
-            CreateMap<User, MemberDTO>();
+            CreateMap<User, MemberDTO>().ReverseMap();
+            CreateMap<RegisterDto, User>().ReverseMap();
             CreateMap<Car, CarDto>()
                 .ForMember(destinationMember => destinationMember.Publishdate,
                 opt => opt.MapFrom(src => src.PublishDate.ToShortDateString()))

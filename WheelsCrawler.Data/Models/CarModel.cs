@@ -8,6 +8,7 @@ namespace WheelsCrawler.Data.Models
         public string WheelsName { get; set; }
         public string RiaName { get; set; }
         public string RstName { get; set; }
+        public int CarBrandId { get; set; }
 
         public virtual CarBrand CarBrand { get; set; }
     }
