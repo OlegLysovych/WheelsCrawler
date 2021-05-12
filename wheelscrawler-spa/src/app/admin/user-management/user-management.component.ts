@@ -52,7 +52,6 @@ export class UserManagementComponent implements OnInit {
           });
       }
     });
-    // this.bsModalRef = this.modalService.show(RolesModalComponent)
   }
 
   private getRolesArr(user) {

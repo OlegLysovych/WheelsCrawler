@@ -57,6 +57,7 @@ export class CarsService {
     params = params.append('kilometrageTo', userParams.kilometrageTo.toString());
     params = params.append('city', userParams.city);
     params = params.append('orderBy', userParams.orderBy);
+    params = params.append('exactUrl', userParams.exactUrl);
     
     return this.getPaginatedResult<Car[]>(this.baseUrl + 'cars', params)
       .pipe(map(response => {

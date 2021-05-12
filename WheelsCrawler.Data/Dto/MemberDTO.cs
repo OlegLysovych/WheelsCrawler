@@ -8,7 +8,7 @@ namespace WheelsCrawler.Data.Dto
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public ICollection<Url> InterestedUrls { get; set; }
+        public ICollection<UrlDto> InterestedUrls { get; set; }
 
     }
 }

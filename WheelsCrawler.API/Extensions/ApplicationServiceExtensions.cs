@@ -16,12 +16,14 @@ namespace WheelsCrawler.API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<ITokenService, TokenService>();
+            services.AddTransient<WheelsCrawlerDbContext>();
             services.AddDbContext<WheelsCrawlerDbContext>(options =>
             {
                 options.UseLazyLoadingProxies().UseSqlite(config.GetConnectionString("DefaultConnection"),
                 // b => b.MigrationsAssembly("WheelsCrawler.Data")
                 assembly => assembly.MigrationsAssembly(typeof(WheelsCrawlerDbContext).Assembly.FullName));
-            });
+                
+            },ServiceLifetime.Transient);
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 
             WheelsCrawlerDbContext wheelsDbContext = serviceProvider.GetService<WheelsCrawlerDbContext>();

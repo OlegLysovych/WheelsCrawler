@@ -53,7 +53,8 @@ namespace WheelsCrawler.API.Controllers
             return new UserDTO
             {
                 Username = user.UserName,
-                Token = await _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user),
+                InterestedUrls = _mapper.Map<ICollection<UrlDto>>(user.InterestedUrls)
             };
         }
 
@@ -77,7 +78,8 @@ namespace WheelsCrawler.API.Controllers
             return new UserDTO
             {
                 Username = user.UserName,
-                Token = await _tokenService.CreateToken(user)
+                Token = await _tokenService.CreateToken(user),
+                InterestedUrls = _mapper.Map<ICollection<UrlDto>>(user.InterestedUrls)
             };
 
         }

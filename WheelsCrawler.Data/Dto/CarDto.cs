@@ -30,6 +30,5 @@ namespace WheelsCrawler.Data.Dto
         public string Cartype { get; set; }
         public string Carfuel { get; set; }
         public string Carmodel { get; set; }
-
     }
 }

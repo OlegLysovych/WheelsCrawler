@@ -33,10 +33,19 @@ namespace WheelsCrawler.API.Controllers
 
             //TODO: move all this stuff to service!!!!!!!!!!!!
 
-            var currentUserName = User.GetUserName();
-            var user = _unityOfWork.Users.GetByUsername(currentUserName);
+            if (!String.IsNullOrEmpty(userParams.ExactUrl))
+            {
+                // var urls = _unityOfWork.Repository<Url>().GetAll();
+                // var url = urls.SingleOrDefault(x => x.UrlToScrape == userParams.ExactUrl);
+                cars = cars.Where(x => x.RelatedQueryUrl.UrlToScrape == userParams.ExactUrl);
+            }
+            else
+            {
+                var currentUserName = User.GetUserName();
+                var user = _unityOfWork.Users.GetByUsername(currentUserName);
+                cars = cars.Where(x => user.InterestedUrls.Contains(x.RelatedQueryUrl));
+            }
 
-            cars = cars.Where(x => user.InterestedUrls.Contains(x.RelatedQueryUrl));
 
             if (userParams.PriceFrom != 0)
                 cars = cars.Where(x => x.Price >= userParams.PriceFrom);
@@ -59,7 +68,7 @@ namespace WheelsCrawler.API.Controllers
             if (!String.IsNullOrEmpty(userParams.City))
                 cars = cars.Where(x => x.City == userParams.City);
 
-            cars = userParams.OrderBy switch 
+            cars = userParams.OrderBy switch
             {
                 "highestKilometrage" => cars.OrderByDescending(x => x.Kilometrage),
                 "lowestKilometrage" => cars.OrderBy(x => x.Kilometrage),
@@ -67,6 +76,28 @@ namespace WheelsCrawler.API.Controllers
                 "lowestPrice" => cars.OrderBy(x => x.Price),
                 _ => cars.OrderByDescending(x => x.PublishDate),
             };
+
+            var pagedCars = await PagedList<Car>.CreateAsync(cars, userParams.PageNumber, userParams.PageSize);
+
+            var carsToReturn = _mapper.Map<IEnumerable<CarDto>>(pagedCars);
+
+            Response.AddPaginationHeader(pagedCars.CurrentPage, pagedCars.PageSize, pagedCars.TotalCount, pagedCars.TotalPages);
+
+            return Ok(carsToReturn);
+        }
+
+        [Authorize]
+        [HttpGet("cars/{url}")]
+        public async Task<ActionResult<IEnumerable<CarDto>>> GetCarsByExactUrl(string url)
+        {
+            var cars = _unityOfWork.Repository<Car>().GetAll();
+
+            //TODO: move all this stuff to service!!!!!!!!!!!!
+
+            var currentUserName = User.GetUserName();
+            var user = _unityOfWork.Users.GetByUsername(currentUserName);
+
+            var userParams = new UserParams();
 
             var pagedCars = await PagedList<Car>.CreateAsync(cars, userParams.PageNumber, userParams.PageSize);
 

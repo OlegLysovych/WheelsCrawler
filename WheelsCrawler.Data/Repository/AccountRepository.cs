@@ -25,11 +25,11 @@ namespace WheelsCrawler.Data.Repository
 
         public new async Task<User> GetById(int id)
         {
-            return await _dbContext.Users
+            return _dbContext.Users
                         .Include(x => x.InterestedUrls)
                         .Where(x => x.Id == id)
                         .AsNoTracking()
-                        .SingleAsync();
+                        .Single();
         }
 
         public  User GetByUsername(string username)

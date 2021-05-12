@@ -19,6 +19,7 @@ namespace WheelsCrawler.Data.Helpers
         public int KilometrageFrom { get; set; } = 0;
         public int KilometrageTo { get; set; } = 1_000_000;
         public string OrderBy { get; set; } = "lastAdded";
+        public string ExactUrl { get; set; }
         
     }
 }

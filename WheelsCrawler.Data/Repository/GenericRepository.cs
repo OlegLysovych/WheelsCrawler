@@ -32,7 +32,8 @@ namespace WheelsCrawler.Data.Repository
         {
             return await _dbContext.Set<TEntity>()
                         .AsNoTracking()
-                        .FirstOrDefaultAsync(e => e.Id == id);
+                        .Where(e => e.Id == id)
+                        .FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(TEntity entity)

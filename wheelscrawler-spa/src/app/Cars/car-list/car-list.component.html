@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="tab-panel">
+    <tabset>
+      <tab heading=""
+        >Обери потрібний пошуковий запит<i
+          class="fa fa-arrow-up"
+          aria-hidden="true"
+        ></i
+        ><i class="fa fa-arrow-up" aria-hidden="true"></i
+        ><i class="fa fa-arrow-up" aria-hidden="true"></i
+      ></tab>
+      <tab
+        *ngFor="let urlItem of interestedUrls"
+        [heading]="urlItem.urlToScrape"
+        [active]="urlItem.active"
+        (selectTab)="urlItem.active = true"
+        (deselect)="urlItem.active = false"
+        [disabled]="urlItem.disabled"
+        [removable]="urlItem.removable"
+        (removed)="removeTabHandler(tabz)"
+      >
+        <app-car-list-detailed
+          [url]="urlItem.urlToScrape"
+          *ngIf="urlItem.active"
+        ></app-car-list-detailed>
+      </tab>
+    </tabset>
+  </div>
+</div>
+<!-- transferUrlWithTimeOut(urlItem.urlToScrape) -->

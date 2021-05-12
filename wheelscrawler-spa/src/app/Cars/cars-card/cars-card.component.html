@@ -6,24 +6,23 @@
     </div>
   </a>
   <div class="mask-custom">
-    <ul class="d-flex list-unstyled pt-3 mb-0">
+    <ul class="d-flex list-unstyled pt-3 mb-0 ml-3">
       <li class="d-flex align-items-center me-3">
         <i class="fa fa-building-o" aria-hidden="true"></i>
         <small>{{ car.city }}</small>
       </li>
-      <li class="d-flex align-items-center">
+      <li class="d-flex align-items-center ml-2">
         <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
         <small>{{ car.kilometrage }} тис. км</small>
       </li>
-      <li class="d-flex align-items-center">
-        <i class="fa fa-building-o" aria-hidden="true"></i>
+      <li class="d-flex align-items-center ml-2">
+        <i class="fas fa-prescription-bottle" aria-hidden="true"></i>
         <small>{{ car.enginecapacity }} л.</small>
       </li>
       <li class="me-auto">
         {{car.carfuel}}
       </li>
       <li class="d-flex align-items-center">
-        <i class="fa fa-building-o" aria-hidden="true"></i>
         <span _ngcontent-c3="" *ngIf="car.plate && car.plate?.length < 11" class="label label-default">{{car.plate}}</span>
       </li>
     </ul>
@@ -35,7 +34,7 @@
         </div>        
         <div *ngIf="car.description.length > 119">
           <button class="btn btn-link btn-primary btn-sm px-0" (click)="alterDescriptionText()">
-            {{ showShortDesciption ? 'SHOW MORE': 'SHOW LESS' }}
+            {{ showShortDesciption ? 'Більше': 'Менше' }}
           </button>
         </div>
       </div>
@@ -52,23 +51,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="card card-blog">
-    <div class="card-image">
-        <a href="#"> <img class="img" src="{{car.pictureUri}}"> </a>
-        <div class="ripple-cont"></div>
-    </div>
-    <div class="table">
-        <h6 class="category text-success"><i class="fa fa-car"></i> Law</h6>
-        <h4 class="card-caption">
-    <a href="#">Vivamus odio ante, feugiat eget nisi sit amet, dignissim velit</a>
-</h4>
-        <p class="card-description"> Lorem ipsum dolor sit amet, consectetur adipis cingelit. Etiam lacinia elit et placerat finibus.</p>
-        <div class="ftr">
-            <div class="author">
-                <a href="#"> <img src="{{sourceLogo(car)}}" alt="..." class="avatar img-raised"  width="42" height="42" > <span>Mary Dunst</span> </a>
-            </div>
-            <div class="stats"> <i class="fa fa-clock-o"></i> 10 min </div>
-        </div>
-    </div>
-</div> -->

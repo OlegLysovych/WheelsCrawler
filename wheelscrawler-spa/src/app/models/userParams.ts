@@ -10,6 +10,7 @@ export class UserParams {
   pageSize = 21;
 
   orderBy = 'lastAdded';
+  exactUrl: string = '';
 
   constructor() {}
 }

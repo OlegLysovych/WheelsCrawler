@@ -1,13 +1,9 @@
-<!-- <div class="row row-cols-4 align-items-stretch py-5">
-  <div class="col-6 mb-3" *ngFor="let item of cars">
-    <app-cars-card [car]="item"></app-cars-card>
-  </div>
-</div> -->
-<div class="text-center mt-3">
+<div>Here gonna be some search engine</div>
+<!-- <div class="text-center mt-3">
   <h3>В даній вибірці знайдено {{pagination?.totalItems}} автомобілі</h3>
 </div>
 
-<div class="containet mt-2 d-flex justify-content-center">
+<div class="container mt-2 d-flex justify-content-center">
   <form #form="ngForm" class="form-inline" (ngSubmit)="loadCars()" autocomplete="off">
     <div class="d-flex flex-column">
       <div class="form-group ml-1">
@@ -17,31 +13,31 @@
   
       <div class="form-group ml-1">
         <label>Ціна до:</label>
-        <input type="number" class="form-control ml-auto" style="width: 100px;" name="priceTo" [(ngModel)]="userParams.priceTo">
+        <input type="number" class="form-control ml-auto" style="width: 100px;" name="priceTo" [(ngModel)]="">
       </div>
     </div>
 
     <div class="d-flex flex-column">
       <div class="form-group ml-1">
         <label>Об'єм двигуна від:</label>
-        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="engineCapacityFrom" [(ngModel)]="userParams.engineCapacityFrom">
+        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="engineCapacityFrom" [(ngModel)]="">
       </div>
   
       <div class="form-group ml-1">
         <label>Об'єм двигуна до:</label>
-        <input type="number" class="form-control ml-auto" style="width: 100px;" name="engineCapacityTo" [(ngModel)]="userParams.engineCapacityTo">
+        <input type="number" class="form-control ml-auto" style="width: 100px;" name="engineCapacityTo" [(ngModel)]="">
       </div>
     </div>
 
     <div class="d-flex flex-column">
       <div class="form-group ml-1">
         <label>Пробіг від:</label>
-        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="kilometrageFrom" [(ngModel)]="userParams.kilometrageFrom">
+        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="kilometrageFrom" [(ngModel)]="">
       </div>
   
       <div class="form-group ml-1">
         <label>Пробіг до:</label>
-        <input type="number" class="form-control ml-auto" style="width: 100px;" name="kilometrageTo" [(ngModel)]="userParams.kilometrageTo">
+        <input type="number" class="form-control ml-auto" style="width: 100px;" name="kilometrageTo" [(ngModel)]="">
       </div>
     </div>
 
@@ -49,7 +45,6 @@
       <button class="btn btn-primary ml-auto mb-1" type="submit">Застосувати фільтр</button>
       <button (click)="resetFilters()" class="btn btn-info" type="submit">Скинути фільтр</button> 
     </div>
-    <!-- float-right d-flex flex-column -->
     <div class="btn-group align-self-stretch"dropdown>
       <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
           aria-controls="dropdown-basic">Сортування<span class="caret"></span>
@@ -64,29 +59,4 @@
       </ul>
     </div>
   </form>
-</div>
-
-<div class="container">
-  <div class="card-columns align-items-stretch py-5">
-    <div class="" *ngFor="let item of cars">
-      <app-cars-card [car]="item"></app-cars-card>
-    </div>
-  </div>
-</div>
-
-<div class="d-flex justify-content-center" *ngIf="pagination">
-  <pagination
-    [boundaryLinks]="true"
-    [totalItems]="pagination.totalItems"
-    [itemsPerPage]="pagination.itemsPerPage"
-    [maxSize]="10"
-    [(ngModel)]="pagination.currentPage"
-    (pageChanged)="pageChanged($event)"
-    previousText="&lsaquo;"
-    nextText="&rsaquo;"
-    firstText="&laquo;"
-    lastText="&raquo;"
-    class="pagination-primary"
-  >
-  </pagination>
-</div>
+</div> -->

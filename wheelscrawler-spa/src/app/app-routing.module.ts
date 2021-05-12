@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
-import { CarListDetailedComponent } from './car-list-detailed/car-list-detailed.component';
-import { CarListComponent } from './car-list/car-list.component';
+import { CarListDetailedComponent } from './Cars/car-list-detailed/car-list-detailed.component';
+import { CarListComponent } from './Cars/car-list/car-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { HomeComponent } from './home/home.component';
-import { SearchListComponent } from './search-list/search-list.component';
+import { SearchListComponent } from './Cars/search-list/search-list.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth.guard';
 

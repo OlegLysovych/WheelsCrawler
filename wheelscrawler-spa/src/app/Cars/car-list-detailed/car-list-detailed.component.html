@@ -1,0 +1,93 @@
+<div class="container-fluid">
+    <!-- <div class="row">
+      <div class="col-sm-4">col-sm-4</div>
+      <div class="col-sm-8">col-sm-8</div>
+    </div> -->
+    <div class="text-center mt-3">
+      <h3>В даній вибірці знайдено {{pagination?.totalItems}} автомобілі</h3>
+    </div>
+    
+    <div class="container mt-2 d-flex justify-content-center">
+      <form #form="ngForm" class="form-inline" (ngSubmit)="loadCars()" autocomplete="off">
+        <div class="d-flex flex-column">
+          <div class="form-group ml-1">
+            <label>Ціна від:</label>
+            <input type="number" class="form-control ml-auto mb-1" style="width: 100px" name="priceFrom" [(ngModel)]="userParams.priceFrom">
+          </div>
+      
+          <div class="form-group ml-1">
+            <label>Ціна до:</label>
+            <input type="number" class="form-control ml-auto" style="width: 100px;" name="priceTo" [(ngModel)]="userParams.priceTo">
+          </div>
+        </div>
+    
+        <div class="d-flex flex-column">
+          <div class="form-group ml-1">
+            <label>Об'єм двигуна від:</label>
+            <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="engineCapacityFrom" [(ngModel)]="userParams.engineCapacityFrom">
+          </div>
+      
+          <div class="form-group ml-1">
+            <label>Об'єм двигуна до:</label>
+            <input type="number" class="form-control ml-auto" style="width: 100px;" name="engineCapacityTo" [(ngModel)]="userParams.engineCapacityTo">
+          </div>
+        </div>
+    
+        <div class="d-flex flex-column">
+          <div class="form-group ml-1">
+            <label>Пробіг від:</label>
+            <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="kilometrageFrom" [(ngModel)]="userParams.kilometrageFrom">
+          </div>
+      
+          <div class="form-group ml-1">
+            <label>Пробіг до:</label>
+            <input type="number" class="form-control ml-auto" style="width: 100px;" name="kilometrageTo" [(ngModel)]="userParams.kilometrageTo">
+          </div>
+        </div>
+    
+        <div class="d-flex flex-column ml-1">
+          <button class="btn btn-primary ml-auto mb-1" type="submit">Застосувати фільтр</button>
+          <button (click)="resetFilters()" class="btn btn-info" type="submit">Скинути фільтр</button> 
+        </div>
+        <!-- float-right d-flex flex-column -->
+        <div class="btn-group align-self-stretch"dropdown>
+          <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+              aria-controls="dropdown-basic">Сортування<span class="caret"></span>
+          </button>
+          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+            role="menu" aria-labelledby="button-basic">
+            <button type="button" (click)="loadCars()" btnRadio="lastAdded" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Останні додані</button>
+            <button type="button" (click)="loadCars()" btnRadio="lowestKilometrage" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найменший пробіг</button>
+            <button type="button" (click)="loadCars()" btnRadio="highestKilometrage" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найбільший пробіг</button>
+            <button type="button" (click)="loadCars()" btnRadio="lowestPrice" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найменша ціна</button>
+            <button type="button" (click)="loadCars()" btnRadio="highestPrice" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найбільша ціна</button>
+          </ul>
+        </div>
+      </form>
+    </div>
+    
+    <div class="container">
+      <div class="card-columns align-items-stretch py-5">
+        <div class="" *ngFor="let item of cars">
+          <app-cars-card [car]="item"></app-cars-card>
+        </div>
+      </div>
+    </div>
+    
+    <div class="d-flex justify-content-center" *ngIf="pagination">
+      <pagination
+        [boundaryLinks]="true"
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [maxSize]="10"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;"
+        class="pagination-primary"
+      >
+      </pagination>
+    </div>
+  </div>

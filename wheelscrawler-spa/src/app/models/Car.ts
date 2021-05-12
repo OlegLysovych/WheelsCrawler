@@ -1,3 +1,5 @@
+import { Url } from "./Url";
+
 export interface Car {
     id:             number;
     description:    string;
