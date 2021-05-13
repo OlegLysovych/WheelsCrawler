@@ -17,12 +17,12 @@ namespace WheelsCrawler.Data.Repository
 
         public new IQueryable<CarModel> GetAll()
         {
-            return _dbContext.CarModels.Include(x => x.CarBrand).AsNoTracking();
+            return _dbContext.CarModels.AsNoTracking().Include(x => x.CarBrand).AsNoTracking();
         }
 
         public CarModel GetModelByName(string modelName)
         {
-            return _dbContext.CarModels.Include(x => x.CarBrand)
+            return _dbContext.CarModels.AsNoTracking().Include(x => x.CarBrand)
                                        .Where(x => x.WheelsName == modelName)
                                        .AsNoTracking()
                                        .Single();

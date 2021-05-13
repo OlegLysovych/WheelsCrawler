@@ -12,6 +12,7 @@ namespace WheelsCrawler.Data.unitOfWork
         IAccountRepository Users { get; }
         ICarRepository Cars { get; }
         IModelRepository Models { get; }
+        IBrandRepository Brands { get; }
         IUrlRepository Urls { get; }
     }
 }

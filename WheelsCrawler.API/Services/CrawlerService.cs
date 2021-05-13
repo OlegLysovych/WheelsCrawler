@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using WheelsCrawler.API.DTO;
+using WheelsCrawler.API.Helpers;
 using WheelsCrawler.API.Interfaces;
 using WheelsCrawler.Core;
 using WheelsCrawler.Data.Dto;
@@ -28,7 +28,7 @@ namespace WheelsCrawler.API.Services
             _uof = uof;
         }
 
-        private string RiaUrlBuilder(SearchRequest requestToSearch)
+        private string RiaUrlBuilder(SearchRequestParams requestToSearch)
         {
             string url = String.Empty;
 
@@ -37,7 +37,7 @@ namespace WheelsCrawler.API.Services
             url = $"https://auto.ria.com/uk/legkovie/{brand.RiaName}/{model.RiaName}/";
             return url;
         }
-        private string RstUrlBuilder(SearchRequest requestToSearch)
+        private string RstUrlBuilder(SearchRequestParams requestToSearch)
         {
             string url = String.Empty;
 
@@ -47,7 +47,7 @@ namespace WheelsCrawler.API.Services
             return url;
         }
 
-        public async Task<Url> Crawl(SearchRequest requestToSearch, MemberDTO user)
+        public async Task<Url> Crawl(SearchRequestParams requestToSearch, MemberDTO user)
         {
             var userToWorkWith = _mapper.Map<User>(user);
             var url = _uof.Urls.GetByLinkName($"{requestToSearch.Brand.ToLower()}/{requestToSearch.Model.ToLower()}");
@@ -81,7 +81,7 @@ namespace WheelsCrawler.API.Services
             return url;
         }
 
-        private async Task RiaCrawl(SearchRequest requestToSearch, Url url)
+        private async Task RiaCrawl(SearchRequestParams requestToSearch, Url url)
         {
             var crawlerRia = new WheelsCrawler<CarSearchRiaDto, Car>()
                                  .AddRequest(new WheelsCrawlerRequest { Url = RiaUrlBuilder(requestToSearch), Regex = @"\?page=[0-9]+$", TimeOut = 5000 })
@@ -91,7 +91,7 @@ namespace WheelsCrawler.API.Services
 
             await crawlerRia.Crawle();
         }
-        private async Task RstCrawl(SearchRequest requestToSearch, Url url)
+        private async Task RstCrawl(SearchRequestParams requestToSearch, Url url)
         {
             var crawlerRST = new WheelsCrawler<CarSearchRstDto, Car>()
                                  .AddRequest(new WheelsCrawlerRequest { Url = RstUrlBuilder(requestToSearch), Regex = @".*/oldcars/.+/[0-9]+\.html$", TimeOut = 5000 })

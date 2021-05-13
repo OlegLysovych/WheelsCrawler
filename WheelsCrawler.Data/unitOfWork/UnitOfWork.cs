@@ -16,6 +16,7 @@ namespace WheelsCrawler.Data.unitOfWork
         private IAccountRepository accountRepository;
         private ICarRepository carRepository;
         private IModelRepository modelRepository;
+        private IBrandRepository brandRepository;
         private IUrlRepository urlRepository;
 
         private IAccManager userManager;
@@ -71,6 +72,15 @@ namespace WheelsCrawler.Data.unitOfWork
                 if (modelRepository == null)
                     modelRepository = new ModelRepository(_dbContext);
                 return modelRepository;
+            }
+        }
+        public IBrandRepository Brands
+        {
+            get
+            {
+                if (brandRepository == null)
+                    brandRepository = new BrandRepository(_dbContext);
+                return brandRepository;
             }
         }
         public IUrlRepository Urls

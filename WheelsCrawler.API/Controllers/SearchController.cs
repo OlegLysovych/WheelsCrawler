@@ -4,13 +4,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WheelsCrawler.API.DTO;
 using WheelsCrawler.API.Extensions;
+using WheelsCrawler.API.Helpers;
 using WheelsCrawler.API.Interfaces;
 using WheelsCrawler.Data.Dto;
-using WheelsCrawler.Data.Helpers;
 using WheelsCrawler.Data.Models;
-using WheelsCrawler.Data.Models.Account;
 using WheelsCrawler.Data.unitOfWork;
 
 namespace WheelsCrawler.API.Controllers
@@ -28,8 +26,8 @@ namespace WheelsCrawler.API.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        public async Task<ActionResult> Search([FromQuery] SearchRequest requestToSearch)
+        [HttpGet("Crawl")]
+        public async Task<ActionResult> Search([FromQuery] SearchRequestParams requestToSearch)
         {
             var currentUserName = User.GetUserName();
             var user = _uof.Users.GetByUsername(currentUserName);
@@ -47,6 +45,46 @@ namespace WheelsCrawler.API.Controllers
             {
                 throw;
             }
+        }
+        [Authorize]
+        [HttpGet("brands")]
+        public ActionResult<IEnumerable<CarBrandDto>> GetBrands()
+        {
+            var brands = _uof.Brands.GetAll().ToList();
+            var brandsToReturn = _mapper.Map<IEnumerable<CarBrandDto>>(brands);
+            return Ok(brandsToReturn);
+        }
+        [Authorize]
+        [HttpGet("models")]
+        public ActionResult<IEnumerable<CarModelDto>> GetModels()
+        {
+            var models = _uof.Repository<CarModel>().GetAll().ToList();
+            var modelsToReturn = _mapper.Map<IEnumerable<CarModelDto>>(models);
+            return Ok(modelsToReturn);
+        }
+        [Authorize]
+        [HttpGet("fuels")]
+        public ActionResult<IEnumerable<CarFuelDto>> GetFuels()
+        {
+            var fuels = _uof.Repository<CarFuel>().GetAll().ToList();
+            var fuelsToReturn = _mapper.Map<IEnumerable<CarFuelDto>>(fuels);
+            return Ok(fuelsToReturn);
+        }
+        [Authorize]
+        [HttpGet("gearboxes")]
+        public ActionResult<IEnumerable<CarGearboxDto>> GetGearboxes()
+        {
+            var gearboxes = _uof.Repository<CarGearbox>().GetAll().ToList();
+            var gearboxesToReturn = _mapper.Map<IEnumerable<CarGearboxDto>>(gearboxes);
+            return Ok(gearboxesToReturn);
+        }
+        [Authorize]
+        [HttpGet("types")]
+        public ActionResult<IEnumerable<CarTypeDto>> GetTypes()
+        {
+            var types = _uof.Repository<CarType>().GetAll().ToList();
+            var typesToReturn = _mapper.Map<IEnumerable<CarTypeDto>>(types);
+            return Ok(typesToReturn);
         }
     }
 }
