@@ -15,6 +15,8 @@ namespace WheelsCrawler.Data.unitOfWork
         private Hashtable _repositories;
         private IAccountRepository accountRepository;
         private ICarRepository carRepository;
+        private IModelRepository modelRepository;
+        private IUrlRepository urlRepository;
 
         private IAccManager userManager;
         private AppRole roleManager;
@@ -59,6 +61,25 @@ namespace WheelsCrawler.Data.unitOfWork
                 if (carRepository == null)
                     carRepository = new CarRepository(_dbContext);
                 return carRepository;
+            }
+        }
+
+        public IModelRepository Models
+        {
+            get
+            {
+                if (modelRepository == null)
+                    modelRepository = new ModelRepository(_dbContext);
+                return modelRepository;
+            }
+        }
+        public IUrlRepository Urls
+        {
+            get
+            {
+                if (urlRepository == null)
+                    urlRepository = new UrlRepository(_dbContext);
+                return urlRepository;
             }
         }
 

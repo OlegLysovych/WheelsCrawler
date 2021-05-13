@@ -22,8 +22,8 @@ namespace WheelsCrawler.API.Extensions
                 options.UseLazyLoadingProxies().UseSqlite(config.GetConnectionString("DefaultConnection"),
                 // b => b.MigrationsAssembly("WheelsCrawler.Data")
                 assembly => assembly.MigrationsAssembly(typeof(WheelsCrawlerDbContext).Assembly.FullName));
-                
-            },ServiceLifetime.Transient);
+
+            }, ServiceLifetime.Transient);
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 
             WheelsCrawlerDbContext wheelsDbContext = serviceProvider.GetService<WheelsCrawlerDbContext>();
@@ -31,6 +31,9 @@ namespace WheelsCrawler.API.Extensions
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ICrawlerService, CrawlerService>();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             return services;
         }

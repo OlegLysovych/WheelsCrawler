@@ -25,18 +25,18 @@ namespace WheelsCrawler.Data.Repository
 
         public new async Task<User> GetById(int id)
         {
-            return _dbContext.Users
+            return _dbContext.Users.AsNoTracking()
                         .Include(x => x.InterestedUrls)
-                        .Where(x => x.Id == id)
                         .AsNoTracking()
-                        .Single();
+                        .Where(x => x.Id == id)
+                        .FirstOrDefault();
         }
 
         public  User GetByUsername(string username)
         {
-            return  _dbContext.Users.Include(x => x.InterestedUrls)
+            return  _dbContext.Users.AsNoTracking().Include(x => x.InterestedUrls).AsNoTracking()
                                          .Where(x => x.UserName == username)
-                                         .Single();
+                                         .FirstOrDefault();
         }
     }
 }

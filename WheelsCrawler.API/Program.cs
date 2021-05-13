@@ -29,7 +29,7 @@ namespace WheelsCrawler.API
                 var userManager = services.GetRequiredService<UserManager<User>>();
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
                 await context.Database.MigrateAsync();
-                await Seed.SeedData(userManager, roleManager, context);
+                // await Seed.SeedData(userManager, roleManager, context);
             }
             catch (System.Exception ex)
             {

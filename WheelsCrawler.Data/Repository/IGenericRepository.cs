@@ -11,8 +11,9 @@ namespace WheelsCrawler.Data.Repository
         IQueryable<TEntity> GetAll();
         Task<TEntity> GetById(int id);
         Task CreateAsync(TEntity entity);
-        Task Update(int id, TEntity entity);
+        void Update(int id, TEntity entity);
         Task Delete(int id);
         Task<bool> SaveAll();
+        void Dispose();
     }
 }

@@ -19,6 +19,10 @@ namespace WheelsCrawler.Processor
         {
             _repository = new GenericRepository<NEntity>();
         }
+        public WheelsCrawlerProcessor(IGenericRepository<NEntity> repository)
+        {
+            _repository = repository;
+        }
         public async Task<IEnumerable<NEntity>> Process(HtmlDocument document)
         {
             var entitiesAtOnePage = GetColumnNameValuePairsFromHtml(document);

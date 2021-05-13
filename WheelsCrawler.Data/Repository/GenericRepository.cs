@@ -10,17 +10,17 @@ using WheelsCrawler.Data.Repository;
 namespace WheelsCrawler.Data.Repository
 {
     //used this resources : https://codingblast.com/entity-framework-core-generic-repository/
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
+    public class GenericRepository<TEntity> : IDisposable, IGenericRepository<TEntity> where TEntity : class, IEntity
     {
         protected readonly WheelsCrawlerDbContext _dbContext;
 
         public GenericRepository()
         {
-            _dbContext = new WheelsCrawlerDbContext();            
+            _dbContext = new WheelsCrawlerDbContext();
         }
         public GenericRepository(WheelsCrawlerDbContext dbContext)
         {
-            _dbContext = dbContext;            
+            _dbContext = dbContext;
         }
 
         public IQueryable<TEntity> GetAll()
@@ -42,10 +42,10 @@ namespace WheelsCrawler.Data.Repository
         }
         public async Task<bool> SaveAll()
         {
-                return await _dbContext.SaveChangesAsync() > 0;
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task Update(int id, TEntity entity)
+        public void Update(int id, TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
         }
@@ -56,5 +56,24 @@ namespace WheelsCrawler.Data.Repository
             _dbContext.Set<TEntity>().Remove(entity);
         }
 
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _dbContext.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

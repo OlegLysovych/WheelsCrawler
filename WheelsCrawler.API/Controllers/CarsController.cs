@@ -37,7 +37,7 @@ namespace WheelsCrawler.API.Controllers
             {
                 // var urls = _unityOfWork.Repository<Url>().GetAll();
                 // var url = urls.SingleOrDefault(x => x.UrlToScrape == userParams.ExactUrl);
-                cars = cars.Where(x => x.RelatedQueryUrl.UrlToScrape == userParams.ExactUrl);
+                cars = cars.Where(x => x.RelatedQueryUrl.UrlToScrape.ToLower() == userParams.ExactUrl.ToLower());
             }
             else
             {
