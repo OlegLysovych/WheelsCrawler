@@ -11,6 +11,8 @@ import { HomeComponent } from './home/home.component';
 import { SearchListComponent } from './Cars/search-list/search-list.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { AuthGuard } from './_guards/auth.guard';
+import { SearchBrandsResolver } from './_resolvers/search-brands.resolver';
+import { SearchModelsResolver } from './_resolvers/search-models.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,7 +23,9 @@ const routes: Routes = [
     children: [
       { path: 'cars', component: CarListComponent },
       { path: 'cars/:id', component: CarListDetailedComponent },
-      { path: 'search', component: SearchListComponent },
+      { path: 'search', component: SearchListComponent, resolve: {
+                                                                  brands: SearchBrandsResolver,
+                                                                  models: SearchModelsResolver} },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard] },
     ],

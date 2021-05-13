@@ -1,43 +1,42 @@
-<div>Here gonna be some search engine</div>
-<!-- <div class="text-center mt-3">
+<div class="text-center mt-3">
   <h3>В даній вибірці знайдено {{pagination?.totalItems}} автомобілі</h3>
 </div>
 
 <div class="container mt-2 d-flex justify-content-center">
-  <form #form="ngForm" class="form-inline" (ngSubmit)="loadCars()" autocomplete="off">
+  <form #form="ngForm" class="form-inline" (ngSubmit)="crawlCars()" autocomplete="off">
     <div class="d-flex flex-column">
       <div class="form-group ml-1">
         <label>Ціна від:</label>
-        <input type="number" class="form-control ml-auto mb-1" style="width: 100px" name="priceFrom" [(ngModel)]="userParams.priceFrom">
+        <input type="number" class="form-control ml-auto mb-1" style="width: 100px" name="priceFrom" [(ngModel)]="searchParams.priceFrom">
       </div>
   
       <div class="form-group ml-1">
         <label>Ціна до:</label>
-        <input type="number" class="form-control ml-auto" style="width: 100px;" name="priceTo" [(ngModel)]="">
+        <input type="number" class="form-control ml-auto" style="width: 100px;" name="priceTo" [(ngModel)]="searchParams.priceFrom">
       </div>
     </div>
 
     <div class="d-flex flex-column">
       <div class="form-group ml-1">
         <label>Об'єм двигуна від:</label>
-        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="engineCapacityFrom" [(ngModel)]="">
+        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="engineCapacityFrom" [(ngModel)]="searchParams.engineCapacityFrom">
       </div>
   
       <div class="form-group ml-1">
         <label>Об'єм двигуна до:</label>
-        <input type="number" class="form-control ml-auto" style="width: 100px;" name="engineCapacityTo" [(ngModel)]="">
+        <input type="number" class="form-control ml-auto" style="width: 100px;" name="engineCapacityTo" [(ngModel)]="searchParams.engineCapacityTo">
       </div>
     </div>
 
     <div class="d-flex flex-column">
       <div class="form-group ml-1">
         <label>Пробіг від:</label>
-        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="kilometrageFrom" [(ngModel)]="">
+        <input type="number" class="form-control ml-auto mb-1" style="width: 100px;" name="kilometrageFrom" [(ngModel)]="searchParams.kilometrageFrom">
       </div>
   
       <div class="form-group ml-1">
         <label>Пробіг до:</label>
-        <input type="number" class="form-control ml-auto" style="width: 100px;" name="kilometrageTo" [(ngModel)]="">
+        <input type="number" class="form-control ml-auto" style="width: 100px;" name="kilometrageTo" [(ngModel)]="searchParams.kilometrageTo">
       </div>
     </div>
 
@@ -51,12 +50,12 @@
       </button>
       <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
         role="menu" aria-labelledby="button-basic">
-        <button type="button" (click)="loadCars()" btnRadio="lastAdded" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Останні додані</button>
-        <button type="button" (click)="loadCars()" btnRadio="lowestKilometrage" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найменший пробіг</button>
-        <button type="button" (click)="loadCars()" btnRadio="highestKilometrage" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найбільший пробіг</button>
-        <button type="button" (click)="loadCars()" btnRadio="lowestPrice" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найменша ціна</button>
-        <button type="button" (click)="loadCars()" btnRadio="highestPrice" class="dropdown-item" name="orderBy" [(ngModel)]="userParams.orderBy">Найбільша ціна</button>
+        <button type="button" (click)="loadCars()" btnRadio="lastAdded" class="dropdown-item" name="orderBy" [(ngModel)]="searchParams.orderBy">Останні додані</button>
+        <button type="button" (click)="loadCars()" btnRadio="lowestKilometrage" class="dropdown-item" name="orderBy" [(ngModel)]="searchParams.orderBy">Найменший пробіг</button>
+        <button type="button" (click)="loadCars()" btnRadio="highestKilometrage" class="dropdown-item" name="orderBy" [(ngModel)]="searchParams.orderBy">Найбільший пробіг</button>
+        <button type="button" (click)="loadCars()" btnRadio="lowestPrice" class="dropdown-item" name="orderBy" [(ngModel)]="searchParams.orderBy">Найменша ціна</button>
+        <button type="button" (click)="loadCars()" btnRadio="highestPrice" class="dropdown-item" name="orderBy" [(ngModel)]="searchParams.orderBy">Найбільша ціна</button>
       </ul>
     </div>
   </form>
-</div> -->
+</div>
