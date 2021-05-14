@@ -56,18 +56,20 @@ namespace WheelsCrawler.Downloader
                     return htmlDocument;
 
                 case WheelsCrawlerDownloaderType.FromWeb:
-                    if (crawlUrl.Contains("rst"))
-                    {
-                        htmlDocument = new HtmlDocument();
-                        WebClient wc = new WebClient();
-                        wc.Encoding = System.Text.Encoding.GetEncoding(1251);
-                        wc.Headers.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)");
-                        var str = await wc.DownloadStringTaskAsync(crawlUrl);
 
-                        htmlDocument.LoadHtml(str);
-                        return htmlDocument;
-                    }
+                    // htmlDocument = new HtmlDocument();
+                    // WebClient wc = new WebClient();
+                    // if (crawlUrl.Contains("rst"))
+                    //     wc.Encoding = System.Text.Encoding.GetEncoding(1251);
+                    // wc.Headers.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)");
+                    // var str = await wc.DownloadStringTaskAsync(crawlUrl);
+
+                    // htmlDocument.LoadHtml(str);
+                    // return htmlDocument;
                     HtmlWeb web = new HtmlWeb();
+                    web.UserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http: //www.google.com/bot.html)";
+                    if (crawlUrl.Contains("rst"))
+                        web.OverrideEncoding = System.Text.Encoding.GetEncoding(1251);
                     return await web.LoadFromWebAsync(crawlUrl);
             }
 

@@ -98,11 +98,11 @@ namespace WheelsCrawler.Downloader
                         linkList = linkList.Select(x => x.Equals(item) ? $"https://rst.ua{x}" : x);
                     }
 
-                if (!url.Contains("rst"))
+                if (!url.Contains("rst") && linkList.Count() > 4)
                 {
                     var lastPage = Int32.Parse(Regex.Match(linkList.Last(), @"\d+$").Value);
-                    var secondLastPage = Int32.Parse(Regex.Match(linkList.SkipLast(1).Last(), @"\d+$").Value);
-                    if (lastPage - secondLastPage > 1)
+                    var secondLastPage = linkList.Count() > 1 ? Int32.Parse(Regex.Match(linkList.SkipLast(1).Last(), @"\d+$").Value) : 0;
+                    if (lastPage - secondLastPage >= 1)
                     {
                         var newUrl = linkList.SkipLast(1).Last();
                         for (int i = secondLastPage + 1; i < lastPage; i++)
