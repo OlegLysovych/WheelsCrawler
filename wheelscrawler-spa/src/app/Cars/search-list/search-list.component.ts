@@ -12,7 +12,10 @@ import { SearchRequestParams } from 'src/app/models/SearchRequestParams';
 import { Url } from 'src/app/models/Url';
 import { User } from 'src/app/models/user';
 import { AccountService } from 'src/app/_services/account.service';
+import { CarsService } from 'src/app/_services/cars.service';
 import { SearchService } from 'src/app/_services/search.service';
+import { CarListDetailedComponent } from '../car-list-detailed/car-list-detailed.component';
+import { CarListComponent } from '../car-list/car-list.component';
 @Component({
   selector: 'app-search-list',
   templateUrl: './search-list.component.html',
@@ -31,10 +34,13 @@ export class SearchListComponent implements OnInit {
   gearboxes: CarGearbox[];
   types: CarType[];
 
+  selectedBrand: CarBrand;
+
   constructor(
     private searchService: SearchService,
     private accService: AccountService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private carService: CarsService
   ) {
     this.searchParams = this.searchService.getSearchParams();
     this.accService.currentUser$.pipe(take(1)).subscribe((user) => {
@@ -56,24 +62,48 @@ export class SearchListComponent implements OnInit {
     });
   }
 
+  loadCars() {
+    this.searchParams.exactUrl = this.searchParams.Brand + '/' + this.searchParams.Model;
+    this.carService.setUserParams(this.searchParams);
+    this.carService.getCars(this.searchParams).subscribe((cars) => {
+      this.cars = cars.result;
+      this.pagination = cars.pagination;
+    });
+  }
+
+
   pageChanged(event: any) {
     this.searchParams.pageNumber = event.page;
     this.searchService.setSearchParams(this.searchParams);
-    this.crawlCars();
+    this.loadCars();
   }
 
   resetFilters() {
     this.searchParams = this.searchService.resetSearchParams();
-    this.crawlCars();
+    this.loadCars();
+  }
+
+  onChangeBrand(brandValue) {
+    this.searchParams.Brand = brandValue;
+    this.selectedBrand = this.brands.find(brand => brand.wheelsName === brandValue);
+  }
+  onChangeModel(modelValue) {
+    this.searchParams.Model = modelValue;
+    // this.selectedBrand = this.brands.some(x => x.WheelsName === brandValue)[0];
+  }
+
+  logParams() {
+    console.log(this.searchParams.Brand);
+    console.log(this.searchParams.Model);
   }
 
   getSearchData() {
-    this.route.data.subscribe(data => {
+    this.route.data.subscribe((data) => {
       this.brands = data['brands'];
     });
-    this.route.data.subscribe(data => {
-      this.models = data['models'];
-    });
+    // this.route.data.subscribe(data => {
+    //   this.models = data['models'];
+    // });
     // this.route.data.subscribe(data => {
     //   this.fuels = data['fuels'];
     // });
@@ -84,5 +114,4 @@ export class SearchListComponent implements OnInit {
     //   this.types = data['types'];
     // });
   }
-
 }

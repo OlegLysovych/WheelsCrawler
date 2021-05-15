@@ -1,7 +1,7 @@
 <div class="container">
   <div class="tab-panel">
     <tabset>
-      <tab heading=""
+      <tab heading="" *ngIf="interestedUrls.length > 0"
         >Обери потрібний пошуковий запит<i
           class="fa fa-arrow-up"
           aria-hidden="true"
@@ -9,6 +9,16 @@
         ><i class="fa fa-arrow-up" aria-hidden="true"></i
         ><i class="fa fa-arrow-up" aria-hidden="true"></i
       ></tab>
+      <tab heading="" *ngIf="interestedUrls.length == 0"
+        >Для створення нового пошукового запиту перейдіть будь ласка на
+        <a
+          class="nav-link"
+          routerLink="/search"
+          routerLinkActive="active"
+          class="btn btn-outline-info stretched-link"
+          >сторінку пошуку</a
+        >
+      </tab>
       <tab
         *ngFor="let urlItem of interestedUrls"
         [heading]="urlItem.urlToScrape"

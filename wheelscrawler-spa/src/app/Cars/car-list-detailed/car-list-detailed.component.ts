@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Car } from 'src/app/models/Car';
 import { Pagination } from 'src/app/models/pagination';
+import { SearchRequestParams } from 'src/app/models/SearchRequestParams';
 import { Url } from 'src/app/models/Url';
 import { UserParams } from 'src/app/models/userParams';
 import { AccountService } from 'src/app/_services/account.service';
@@ -14,6 +15,7 @@ import { CarsService } from 'src/app/_services/cars.service';
 })
 export class CarListDetailedComponent implements OnInit {
   @Input() url: string;
+  @Output() myEvent = new EventEmitter();
   cars: Car[];
   pagination: Pagination;
   userParams: UserParams;

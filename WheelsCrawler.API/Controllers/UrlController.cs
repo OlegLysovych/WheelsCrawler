@@ -24,9 +24,10 @@ namespace WheelsCrawler.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<UrlDto>> GetUrls()
+        public IEnumerable<UrlDto> GetUrls()
         {
-            return new List<UrlDto>();
+            var urls =  _uof.Urls.GetAll().ToList();
+            return _mapper.Map<IEnumerable<UrlDto>>(urls);
         }
     }
 }

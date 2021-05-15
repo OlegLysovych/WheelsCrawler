@@ -49,8 +49,9 @@ export class SearchService {
 
     params = params.append('brand', searchParams.Brand.toString());
     params = params.append('model', searchParams.Model.toString());
-    params = params.append('fuel', searchParams.priceFrom.toString());
-    params = params.append('gearbox', searchParams.priceTo.toString());
+    params = params.append('fuel', searchParams.Fuel.toString());
+    params = params.append('gearbox', searchParams.Gearbox.toString());
+    params = params.append('isNeedToSave', searchParams.IsNeedToSave.toString());
 
     params = params.append('engineCapacityFrom', searchParams.engineCapacityFrom.toString());
     params = params.append('engineCapacityto', searchParams.engineCapacityTo.toString());

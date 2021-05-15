@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,10 +36,13 @@ namespace WheelsCrawler.API.Controllers
             try
             {
                 var crawledUrl = await _crawlerService.Crawl(requestToSearch, userToWorkWith);
-                user.InterestedUrls.Add(crawledUrl);//TODO: optional saving url!
-                await _uof.Users.SaveAll();
-                crawledUrl.InterestedUsers.Add(user);//TODO: optional saving url!
-                await _uof.Urls.SaveAll();
+                if (requestToSearch.IsNeedToSave)
+                {
+                    user.InterestedUrls.Add(crawledUrl);//TODO: optional saving url!
+                    await _uof.Users.SaveAll();
+                    crawledUrl.InterestedUsers.Add(user);//TODO: optional saving url!
+                    await _uof.Urls.SaveAll();
+                }
                 return RedirectToActionPermanent(actionName: "GetCars", controllerName: "Cars", new { ExactUrl = crawledUrl.UrlToScrape });
             }
             catch (System.Exception)

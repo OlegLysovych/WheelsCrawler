@@ -1,7 +1,7 @@
 import { CarBrand } from "./CarBrand";
 
 export interface CarModel {
-    Id: number;
-    WheelsName: string;
-    CarBrandId: number;
+    id: number;
+    wheelsName: string;
+    carBrandId: number;
 }

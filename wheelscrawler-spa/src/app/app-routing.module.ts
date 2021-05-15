@@ -25,7 +25,8 @@ const routes: Routes = [
       { path: 'cars/:id', component: CarListDetailedComponent },
       { path: 'search', component: SearchListComponent, resolve: {
                                                                   brands: SearchBrandsResolver,
-                                                                  models: SearchModelsResolver} },
+                                                                  // models: SearchModelsResolver
+                                                                } },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard] },
     ],
