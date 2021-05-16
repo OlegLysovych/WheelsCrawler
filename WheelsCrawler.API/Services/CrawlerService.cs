@@ -57,12 +57,12 @@ namespace WheelsCrawler.API.Services
                 {
                     UrlToScrape = $"{requestToSearch.Brand.ToLower()}/{requestToSearch.Model.ToLower()}",
                 };
-                if (!user.InterestedUrls.Any(x => x.UrlToScrape.ToLower() == url.UrlToScrape.ToLower()))
-                    url.InterestedUsers = new List<User> { userToWorkWith };
+                // if (!user.InterestedUrls.Any(x => x.UrlToScrape.ToLower() == url.UrlToScrape.ToLower()))
+                //     url.InterestedUsers = new List<User> { userToWorkWith };
 
-                await _uof.Urls.CreateAsync(url);
-                if (!await _uof.Urls.SaveAll())
-                    throw new Exception("there are a problem with creating new url when crawl");
+                // await _uof.Urls.CreateAsync(url);
+                // if (!await _uof.Urls.SaveAll())
+                //     throw new Exception("there are a problem with creating new url when crawl");
             }
             // else
             // {

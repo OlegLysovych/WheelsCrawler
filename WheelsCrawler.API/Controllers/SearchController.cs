@@ -35,15 +35,16 @@ namespace WheelsCrawler.API.Controllers
             var userToWorkWith = _mapper.Map<MemberDTO>(user);
             try
             {
-                var crawledUrl = await _crawlerService.Crawl(requestToSearch, userToWorkWith);
+                var crawledUrl = _crawlerService.Crawl(requestToSearch, userToWorkWith);
                 if (requestToSearch.IsNeedToSave)
                 {
-                    user.InterestedUrls.Add(crawledUrl);//TODO: optional saving url!
+                    user.InterestedUrls.Add(crawledUrl.Result);//TODO: optional saving url!
                     await _uof.Users.SaveAll();
-                    crawledUrl.InterestedUsers.Add(user);//TODO: optional saving url!
+                    crawledUrl.Result.InterestedUsers.Add(user);//TODO: optional saving url!
                     await _uof.Urls.SaveAll();
                 }
-                return RedirectToActionPermanent(actionName: "GetCars", controllerName: "Cars", new { ExactUrl = crawledUrl.UrlToScrape });
+                return Ok();
+                // return RedirectToActionPermanent(actionName: "GetCars", controllerName: "Cars", new { ExactUrl = crawledUrl.UrlToScrape });
             }
             catch (System.Exception)
             {

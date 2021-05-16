@@ -32,6 +32,7 @@ namespace WheelsCrawler.API.Extensions
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ICrawlerService, CrawlerService>();
+            services.AddScoped<ICarService, CarService>();
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 

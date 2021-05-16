@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { BehaviorSubject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Car } from '../models/Car';
@@ -11,19 +12,61 @@ import { CarModel } from '../models/CarModel';
 import { CarType } from '../models/CarType';
 import { PaginatedResult } from '../models/pagination';
 import { SearchRequestParams } from '../models/SearchRequestParams';
+import { User } from '../models/user';
 import { AccountService } from './account.service';
+import { CarsService } from './cars.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SearchService {
   baseUrl = environment.apiUrl;
   carCache = new Map();
   searchParams: SearchRequestParams;
+  hubUrl = environment.hubUrl;
+  private hubConnection: HubConnection;
+  private carsThreadSource = new BehaviorSubject<Car[]>([]);
+  carsThread$ = this.carsThreadSource.asObservable();
 
-
-  constructor(private http: HttpClient, private accountService: AccountService) {
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService,
+    private carService: CarsService
+  ) {
     this.searchParams = new SearchRequestParams();
+  }
+
+  createHubConnection(user: User, url: string) {
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(this.hubUrl + 'search' + url, {
+        accessTokenFactory: () => user.token,
+      })
+      .withAutomaticReconnect()
+      .build();
+
+    this.hubConnection
+      .start()
+      .then(() => {
+        console.log(
+          `SignalR connection success! connectionId: ${this.hubConnection.connectionId} `
+        );
+      })
+      .catch((error) => console.log(error));
+
+    // this.hubConnection.on('GetCrawledCars', () => {
+    //   this.carService.getCars(this.searchParams).subscribe((cars) => {
+    //     // this.carsThreadSource.next(cars.result);
+    //   });
+    // });
+
+    this.hubConnection.on('ReceiveCrawledCars', (cars) => {
+      this.carsThreadSource.next(cars);
+    });
+    // console.log(this.carsThreadSource);
+  }
+
+  stopHubConnection() {
+    if (this.hubConnection) this.hubConnection.stop();
   }
 
   getSearchParams() {
@@ -39,35 +82,64 @@ export class SearchService {
     return this.searchParams;
   }
 
-  getCrawledCars(searchParams: SearchRequestParams) {
+  async getCrawledCars(searchParams: SearchRequestParams) {
     var response = this.carCache.get(Object.values(searchParams).join('-'));
     if (response) {
       return of(response);
     }
 
-    let params = this.getPaginationHeaders(searchParams.pageNumber, searchParams.pageSize);
+    let params = this.getPaginationHeaders(
+      searchParams.pageNumber,
+      searchParams.pageSize
+    );
 
     params = params.append('brand', searchParams.Brand.toString());
     params = params.append('model', searchParams.Model.toString());
     params = params.append('fuel', searchParams.Fuel.toString());
     params = params.append('gearbox', searchParams.Gearbox.toString());
-    params = params.append('isNeedToSave', searchParams.IsNeedToSave.toString());
+    params = params.append(
+      'isNeedToSave',
+      searchParams.IsNeedToSave.toString()
+    );
 
-    params = params.append('engineCapacityFrom', searchParams.engineCapacityFrom.toString());
-    params = params.append('engineCapacityto', searchParams.engineCapacityTo.toString());
+    params = params.append(
+      'engineCapacityFrom',
+      searchParams.engineCapacityFrom.toString()
+    );
+    params = params.append(
+      'engineCapacityto',
+      searchParams.engineCapacityTo.toString()
+    );
     params = params.append('priceFrom', searchParams.priceFrom.toString());
     params = params.append('priceTo', searchParams.priceTo.toString());
-    params = params.append('kilometrageFrom', searchParams.kilometrageFrom.toString());
-    params = params.append('kilometrageTo', searchParams.kilometrageTo.toString());
+    params = params.append(
+      'kilometrageFrom',
+      searchParams.kilometrageFrom.toString()
+    );
+    params = params.append(
+      'kilometrageTo',
+      searchParams.kilometrageTo.toString()
+    );
     params = params.append('city', searchParams.city);
     params = params.append('orderBy', searchParams.orderBy);
     params = params.append('exactUrl', searchParams.exactUrl);
-    
-    return this.getPaginatedResult<Car[]>(this.baseUrl + 'search/crawl', params)
-      .pipe(map(response => {
-        this.carCache.set(Object.values(searchParams).join('-'), response);
-        return response;
-      }));
+    console.log(params.get('exactUrl'));
+    // return this.http.get<Car[]>(this.baseUrl + 'search/crawl', {observe: 'response', params }).pipe(
+    // );
+
+    return this.hubConnection
+      .invoke('CrawlCars', searchParams)
+      .catch((error) => console.log(error));
+
+    // return this.getPaginatedResult<Car[]>(
+    //   this.baseUrl + 'search/crawl',
+    //   params
+    // ).pipe(
+    //   map((response) => {
+    //     this.carCache.set(Object.values(searchParams).join('-'), response);
+    //     return response;
+    //   })
+    // );
   }
 
   getBrands() {
@@ -83,25 +155,39 @@ export class SearchService {
     return this.http.get<Partial<CarType[]>>(this.baseUrl + 'search/types');
   }
   getGearboxes() {
-    return this.http.get<Partial<CarGearbox[]>>(this.baseUrl + 'search/gearboxes');
+    return this.http.get<Partial<CarGearbox[]>>(
+      this.baseUrl + 'search/gearboxes'
+    );
   }
 
   private getPaginatedResult<T>(url, params) {
     const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
-    return this.http
-      .get<T>(url, { observe: 'response', params })
-      .pipe(
-        map((response) => {
-          paginatedResult.result = response.body;
-          if (response.headers.get('Pagination') !== null) {
-            paginatedResult.pagination = JSON.parse(
-              response.headers.get('Pagination')
-            );
-          }
-          return paginatedResult;
-        })
-      );
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
+      map((response) => {
+        paginatedResult.result = response.body;
+        if (response.headers.get('Pagination') !== null) {
+          paginatedResult.pagination = JSON.parse(
+            response.headers.get('Pagination')
+          );
+        }
+        return paginatedResult;
+      })
+    );
   }
+  // private getPaginatedResultFromHub<T>(url, params) {
+  //   const paginatedResult: PaginatedResult<T> = new PaginatedResult<T>();
+  //   return this.hubConnection.invoke<T>('CrawlCars', url, { observe: 'response', params }).catch(
+  //     map((response) => {
+  //       paginatedResult.result = response.body;
+  //       if (response.headers.get('Pagination') !== null) {
+  //         paginatedResult.pagination = JSON.parse(
+  //           response.headers.get('Pagination')
+  //         );
+  //       }
+  //       return paginatedResult;
+  //     })
+  //   );
+  // }
 
   private getPaginationHeaders(pageNumber: number, pageSize: number) {
     let params = new HttpParams();
@@ -109,6 +195,4 @@ export class SearchService {
     params = params.append('pageSize', pageSize.toString());
     return params;
   }
-
-
 }
