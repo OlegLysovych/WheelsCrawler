@@ -34,7 +34,7 @@ namespace WheelsCrawler.API.Services
 
             var model = _uof.Models.GetModelByName(requestToSearch.Model);
             var brand = model.CarBrand;
-            url = $"https://auto.ria.com/uk/legkovie/{brand.RiaName}/{model.RiaName}";
+            url = $"https://auto.ria.com/uk/legkovie/{brand.RiaName}/{model.RiaName}/";
             return url;
         }
         private string RstUrlBuilder(SearchRequestParams requestToSearch)
@@ -43,7 +43,7 @@ namespace WheelsCrawler.API.Services
 
             var model = _uof.Models.GetModelByName(requestToSearch.Model);
             var brand = model.CarBrand;
-            url = $"https://rst.ua/ukr/oldcars/{brand.RstName}/{model.RstName}";
+            url = $"https://rst.ua/ukr/oldcars/{brand.RstName}/{model.RstName}/";
             return url;
         }
 
@@ -56,13 +56,14 @@ namespace WheelsCrawler.API.Services
                 url = new Url
                 {
                     UrlToScrape = $"{requestToSearch.Brand.ToLower()}/{requestToSearch.Model.ToLower()}",
+                    InterestedUsers = new List<User>()
                 };
-                // if (!user.InterestedUrls.Any(x => x.UrlToScrape.ToLower() == url.UrlToScrape.ToLower()))
-                //     url.InterestedUsers = new List<User> { userToWorkWith };
 
-                // await _uof.Urls.CreateAsync(url);
-                // if (!await _uof.Urls.SaveAll())
-                //     throw new Exception("there are a problem with creating new url when crawl");
+                // url.InterestedUsers = new List<User> { userToWorkWith };
+
+                await _uof.Urls.CreateAsync(url);
+                if (!await _uof.Urls.SaveAll())
+                    throw new Exception("there are a problem with creating new url when crawl");
             }
             // else
             // {
@@ -74,19 +75,31 @@ namespace WheelsCrawler.API.Services
             //         //     throw new Exception("there are a problem with updating new url when crawl");
             //     }
             // }
+            // try
+            // {
+            //     if (requestToSearch.IsNeedToSave)
+            //     {
+            //         userToWorkWith.InterestedUrls.Add(url);//TODO: optional saving url!
+            //         url.InterestedUsers.Add(userToWorkWith);//TODO: optional saving url!
+            //         // await _uof.Users.SaveAll();
+            //     }
+            // }
+            // catch (System.Exception)
+            // {
+            //     throw;
+            // }
 
             await RiaCrawl(requestToSearch, url);
-            // await RstCrawl(requestToSearch, url);
-
+            await RstCrawl(requestToSearch, url);
+            // await _uof.Urls.SaveAll();
             return url;
         }
 
         private async Task RiaCrawl(SearchRequestParams requestToSearch, Url url)
         {
-            // throw new Exception(RiaUrlBuilder(requestToSearch));
             var crawlerRia = new WheelsCrawler<CarSearchRiaDto, Car>()
                                  .AddRequest(new WheelsCrawlerRequest { Url = RiaUrlBuilder(requestToSearch), Regex = @"\?page=[0-9]+$", TimeOut = 5000 })
-                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromWeb, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/" })
+                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = "C:/Users/PC/source/repos/WheelsCrawler/htmls/RIA/" })
                                  .AddProcessor(new WheelsCrawlerProcessor<CarSearchRiaDto, Car>(_uof.Cars) { })
                                  .AddPipeline(new WheelsCrawlerPipeline<Car>(_uof.Cars) { Url = url });
 
@@ -96,7 +109,7 @@ namespace WheelsCrawler.API.Services
         {
             var crawlerRST = new WheelsCrawler<CarSearchRstDto, Car>()
                                  .AddRequest(new WheelsCrawlerRequest { Url = RstUrlBuilder(requestToSearch), Regex = @".*/oldcars/.+/[0-9]+\.html$", TimeOut = 5000 })
-                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromWeb, DownloadPath = @"C:/Users/PC/source/repos/WheelsCrawler/htmls/RST/" })
+                                 .AddDownloader(new WheelsCrawlerDownloader { DownloderType = WheelsCrawlerDownloaderType.FromFile, DownloadPath = @"C:/Users/PC/source/repos/WheelsCrawler/htmls/RST/" })
                                  .AddProcessor(new WheelsCrawlerProcessor<CarSearchRstDto, Car>(_uof.Cars) { })
                                  .AddPipeline(new WheelsCrawlerPipeline<Car>(_uof.Cars) { Url = url });
 

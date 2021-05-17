@@ -29,13 +29,25 @@ namespace WheelsCrawler.API.SignalR
 
         public override async Task OnConnectedAsync()
         {
+            await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception ex)
+        {
+            await base.OnDisconnectedAsync(ex);
+        }
+
+        public async Task GetCars(SearchRequestParams requestToSearch)
+        {
+            
             var httpContext = Context.GetHttpContext();
-            var url = httpContext.Request.Query["url"].ToString();
+            // var url = httpContext.Request.Query["url"].ToString();
             // var groupName = GetGroupName(Context.User.GetUserName(), url);
 
             // await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             // var client = Clients.Client(Context.ConnectionId);
-            var userParams = new UserParams { ExactUrl = $"{url}" };
+            // var userParams = new UserParams { ExactUrl = $"{url}" };
+            var userParams = requestToSearch;
             var cars = await _carService.GetCars(userParams, Context.User.GetUserName());
 
             var pagedCars = await PagedList<Car>.CreateAsync(cars, userParams.PageNumber, userParams.PageSize);
@@ -45,16 +57,7 @@ namespace WheelsCrawler.API.SignalR
             // Response.AddPaginationHeader(pagedCars.CurrentPage, pagedCars.PageSize, pagedCars.TotalCount, pagedCars.TotalPages);
 
             await Clients.Caller.SendAsync("ReceiveCrawledCars", carsToReturn);
-        }
 
-        public override async Task OnDisconnectedAsync(Exception ex)
-        {
-            await base.OnDisconnectedAsync(ex);
-        }
-
-        public async Task GetCars()
-        {
-            
         }
         public async Task CrawlCars(SearchRequestParams requestToSearch)
         {
@@ -63,17 +66,16 @@ namespace WheelsCrawler.API.SignalR
             var userToWorkWith = _mapper.Map<MemberDTO>(user);
             try
             {
-                // var crawledUrl = await _crawlerService.Crawl(requestToSearch, userToWorkWith);
-                await Clients.Caller.SendAsync("ReceiveCrawledCars");
-                // if (requestToSearch.IsNeedToSave)
-                // {
-                //     user.InterestedUrls.Add(crawledUrl);//TODO: optional saving url!
-                //     await _uof.Users.SaveAll();
-                //     crawledUrl.InterestedUsers.Add(user);//TODO: optional saving url!
-                //     await _uof.Urls.SaveAll();
-                // }
+                await Clients.Caller.SendAsync("ReceiveCrawledCars", new List<CarDto>());
+                var crawledUrl = await _crawlerService.Crawl(requestToSearch, userToWorkWith);
+                if (requestToSearch.IsNeedToSave)
+                {
+                    user.InterestedUrls.Add(crawledUrl);//TODO: optional saving url!
+                    await _uof.Users.SaveAll();
+                    crawledUrl.InterestedUsers.Add(user);//TODO: optional saving url!
+                    await _uof.Urls.SaveAll();
+                }
                 // await Clients.Caller.re("Crawled", )
-                await Clients.Caller.SendAsync("ReceiveCrawledCars");
                 // return RedirectToActionPermanent(actionName: "GetCars", controllerName: "Cars", new { ExactUrl = crawledUrl.UrlToScrape });
             }
             catch (System.Exception)

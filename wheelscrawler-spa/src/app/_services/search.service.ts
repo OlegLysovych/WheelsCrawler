@@ -36,13 +36,20 @@ export class SearchService {
     this.searchParams = new SearchRequestParams();
   }
 
-  createHubConnection(user: User, url: string) {
+  createHubConnection(user: User) {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'search' + url, {
+      .withUrl(this.hubUrl + 'search', {
         accessTokenFactory: () => user.token,
       })
       .withAutomaticReconnect()
       .build();
+
+    this.hubConnection.on('ReceiveCrawledCars', (cars) => {
+      this.carsThreadSource.next(cars);
+      this.hubConnection
+        .invoke('GetCars', this.searchParams)
+        .catch((error) => console.log(error));
+    });
 
     this.hubConnection
       .start()
@@ -52,18 +59,18 @@ export class SearchService {
         );
       })
       .catch((error) => console.log(error));
-
+    
+      
     // this.hubConnection.on('GetCrawledCars', () => {
     //   this.carService.getCars(this.searchParams).subscribe((cars) => {
     //     // this.carsThreadSource.next(cars.result);
     //   });
     // });
 
-    this.hubConnection.on('ReceiveCrawledCars', (cars) => {
-      this.carsThreadSource.next(cars);
-    });
     // console.log(this.carsThreadSource);
   }
+
+  getCars() {}
 
   stopHubConnection() {
     if (this.hubConnection) this.hubConnection.stop();
@@ -88,42 +95,43 @@ export class SearchService {
       return of(response);
     }
 
-    let params = this.getPaginationHeaders(
-      searchParams.pageNumber,
-      searchParams.pageSize
-    );
+    // let params = this.getPaginationHeaders(
+    //   searchParams.pageNumber,
+    //   searchParams.pageSize
+    // );
 
-    params = params.append('brand', searchParams.Brand.toString());
-    params = params.append('model', searchParams.Model.toString());
-    params = params.append('fuel', searchParams.Fuel.toString());
-    params = params.append('gearbox', searchParams.Gearbox.toString());
-    params = params.append(
-      'isNeedToSave',
-      searchParams.IsNeedToSave.toString()
-    );
+    // params = params.append('brand', searchParams.Brand.toString());
+    // params = params.append('model', searchParams.Model.toString());
+    // params = params.append('fuel', searchParams.Fuel.toString());
+    // params = params.append('gearbox', searchParams.Gearbox.toString());
+    // params = params.append(
+    //   'isNeedToSave',
+    //   searchParams.IsNeedToSave.toString()
+    // );
 
-    params = params.append(
-      'engineCapacityFrom',
-      searchParams.engineCapacityFrom.toString()
-    );
-    params = params.append(
-      'engineCapacityto',
-      searchParams.engineCapacityTo.toString()
-    );
-    params = params.append('priceFrom', searchParams.priceFrom.toString());
-    params = params.append('priceTo', searchParams.priceTo.toString());
-    params = params.append(
-      'kilometrageFrom',
-      searchParams.kilometrageFrom.toString()
-    );
-    params = params.append(
-      'kilometrageTo',
-      searchParams.kilometrageTo.toString()
-    );
-    params = params.append('city', searchParams.city);
-    params = params.append('orderBy', searchParams.orderBy);
-    params = params.append('exactUrl', searchParams.exactUrl);
-    console.log(params.get('exactUrl'));
+    // params = params.append(
+    //   'engineCapacityFrom',
+    //   searchParams.engineCapacityFrom.toString()
+    // );
+    // params = params.append(
+    //   'engineCapacityto',
+    //   searchParams.engineCapacityTo.toString()
+    // );
+    // params = params.append('priceFrom', searchParams.priceFrom.toString());
+    // params = params.append('priceTo', searchParams.priceTo.toString());
+    // params = params.append(
+    //   'kilometrageFrom',
+    //   searchParams.kilometrageFrom.toString()
+    // );
+    // params = params.append(
+    //   'kilometrageTo',
+    //   searchParams.kilometrageTo.toString()
+    // );
+    // params = params.append('city', searchParams.city);
+    // params = params.append('orderBy', searchParams.orderBy);
+    // params = params.append('exactUrl', searchParams.exactUrl);
+    // console.log(params.get('exactUrl'));
+
     // return this.http.get<Car[]>(this.baseUrl + 'search/crawl', {observe: 'response', params }).pipe(
     // );
 

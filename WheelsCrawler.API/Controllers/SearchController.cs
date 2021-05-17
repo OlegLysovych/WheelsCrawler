@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using WheelsCrawler.API.Extensions;
 using WheelsCrawler.API.Helpers;
 using WheelsCrawler.API.Interfaces;
+using WheelsCrawler.API.SignalR;
 using WheelsCrawler.Data.Dto;
 using WheelsCrawler.Data.Models;
 using WheelsCrawler.Data.unitOfWork;
@@ -19,12 +21,21 @@ namespace WheelsCrawler.API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _uof;
         private readonly ICrawlerService _crawlerService;
-        public SearchController(IUnitOfWork uof, IMapper mapper, ICrawlerService crawlerService)
+        private readonly IHubContext<SearchHub> _hub;
+        public SearchController(IUnitOfWork uof, IMapper mapper, ICrawlerService crawlerService, IHubContext<SearchHub> hub)
         {
+            _hub = hub;
             _crawlerService = crawlerService;
             _uof = uof;
             _mapper = mapper;
         }
+
+        // [Authorize]
+        // [HttpGet("HubCrawl")]
+        // public async Task<ActionResult> SearchViaHub([FromQuery] SearchRequestParams requestToSearch)
+        // {
+        //     _hub.Clients.
+        // }
 
         [Authorize]
         [HttpGet("Crawl")]

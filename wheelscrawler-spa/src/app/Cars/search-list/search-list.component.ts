@@ -55,6 +55,8 @@ export class SearchListComponent implements OnInit, OnDestroy {
     this.getSearchData();
     console.log(this.brands);
     console.log(this.models);
+
+    this.searchService.createHubConnection(this.user);
   }
 
   crawlCars() {
@@ -62,10 +64,10 @@ export class SearchListComponent implements OnInit, OnDestroy {
     this.searchParams.Brand + '/' + this.searchParams.Model;
     this.searchService.setSearchParams(this.searchParams);
     // this.searchService.getCrawledCars(this.searchParams);
-    this.searchService.createHubConnection(
-      this.user,
-      this.searchParams.exactUrl
-    );
+    // this.searchService.createHubConnection(
+    //   this.user,
+    //   // this.searchParams.exactUrl
+    // );
     // this.searchService.getCrawledCars(this.searchParams).subscribe((cars) => {
     //   this.cars = cars.result;
     //   this.pagination = cars.pagination;
@@ -80,10 +82,10 @@ export class SearchListComponent implements OnInit, OnDestroy {
     this.searchParams.exactUrl =
       this.searchParams.Brand + '/' + this.searchParams.Model;
     this.carService.setUserParams(this.searchParams);
-    this.searchService.createHubConnection(
-      this.user,
-      this.searchParams.exactUrl
-    );
+    // this.searchService.createHubConnection(
+    //   this.user,
+    //   // this.searchParams.exactUrl
+    // );
     // this.carService.getCars(this.searchParams).subscribe((cars) => {
     //   this.cars = cars.result;
     //   this.pagination = cars.pagination;
