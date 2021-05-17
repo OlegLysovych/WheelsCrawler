@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import { Car } from 'src/app/models/Car';
@@ -21,12 +21,14 @@ import { CarListComponent } from '../car-list/car-list.component';
   templateUrl: './search-list.component.html',
   styleUrls: ['./search-list.component.css'],
 })
-export class SearchListComponent implements OnInit {
+export class SearchListComponent implements OnInit, OnDestroy {
   @Input() url: string;
   cars: Car[];
   pagination: Pagination;
   searchParams: SearchRequestParams;
   interestedUrls: Url[];
+  user: User;
+  message: string;
 
   brands: CarBrand[];
   models: CarModel[];
@@ -37,7 +39,7 @@ export class SearchListComponent implements OnInit {
   selectedBrand: CarBrand;
 
   constructor(
-    private searchService: SearchService,
+    public searchService: SearchService,
     private accService: AccountService,
     private route: ActivatedRoute,
     private carService: CarsService
@@ -45,6 +47,7 @@ export class SearchListComponent implements OnInit {
     this.searchParams = this.searchService.getSearchParams();
     this.accService.currentUser$.pipe(take(1)).subscribe((user) => {
       this.interestedUrls = user.interestedUrls;
+      this.user = user;
     });
   }
 
@@ -52,25 +55,46 @@ export class SearchListComponent implements OnInit {
     this.getSearchData();
     console.log(this.brands);
     console.log(this.models);
+
+    this.searchService.createHubConnection(this.user);
   }
 
   crawlCars() {
+    this.searchParams.exactUrl =
+    this.searchParams.Brand + '/' + this.searchParams.Model;
     this.searchService.setSearchParams(this.searchParams);
-    this.searchService.getCrawledCars(this.searchParams).subscribe((cars) => {
-      this.cars = cars.result;
-      this.pagination = cars.pagination;
+    // this.searchService.getCrawledCars(this.searchParams);
+    // this.searchService.createHubConnection(
+    //   this.user,
+    //   // this.searchParams.exactUrl
+    // );
+    // this.searchService.getCrawledCars(this.searchParams).subscribe((cars) => {
+    //   this.cars = cars.result;
+    //   this.pagination = cars.pagination;
+    // });
+    this.searchService.getCrawledCars(this.searchParams).then((resp) => {
+      this.message = resp;
+      console.log(this.message);
     });
   }
 
   loadCars() {
-    this.searchParams.exactUrl = this.searchParams.Brand + '/' + this.searchParams.Model;
+    this.searchParams.exactUrl =
+      this.searchParams.Brand + '/' + this.searchParams.Model;
     this.carService.setUserParams(this.searchParams);
-    this.carService.getCars(this.searchParams).subscribe((cars) => {
-      this.cars = cars.result;
-      this.pagination = cars.pagination;
-    });
+    // this.searchService.createHubConnection(
+    //   this.user,
+    //   // this.searchParams.exactUrl
+    // );
+    // this.carService.getCars(this.searchParams).subscribe((cars) => {
+    //   this.cars = cars.result;
+    //   this.pagination = cars.pagination;
+    // });
   }
 
+  ngOnDestroy(): void {
+    this.searchService.stopHubConnection();
+  }
 
   pageChanged(event: any) {
     this.searchParams.pageNumber = event.page;
@@ -85,7 +109,9 @@ export class SearchListComponent implements OnInit {
 
   onChangeBrand(brandValue) {
     this.searchParams.Brand = brandValue;
-    this.selectedBrand = this.brands.find(brand => brand.wheelsName === brandValue);
+    this.selectedBrand = this.brands.find(
+      (brand) => brand.wheelsName === brandValue
+    );
   }
   onChangeModel(modelValue) {
     this.searchParams.Model = modelValue;

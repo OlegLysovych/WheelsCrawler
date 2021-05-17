@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WheelsCrawler.API.Extensions;
+using WheelsCrawler.API.Interfaces;
 using WheelsCrawler.Data.Dto;
 using WheelsCrawler.Data.Helpers;
 using WheelsCrawler.Data.Models;
@@ -19,8 +20,10 @@ namespace WheelsCrawler.API.Controllers
     {
         private readonly IUnitOfWork _unityOfWork;
         private readonly IMapper _mapper;
-        public CarsController(IUnitOfWork unityOfWork, IMapper mapper)
+        private readonly ICarService _carService;
+        public CarsController(IUnitOfWork unityOfWork, IMapper mapper, ICarService carService)
         {
+            _carService = carService;
             _mapper = mapper;
             _unityOfWork = unityOfWork;
         }
@@ -29,53 +32,13 @@ namespace WheelsCrawler.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CarDto>>> GetCars([FromQuery] UserParams userParams)
         {
-            var cars = await _unityOfWork.Cars.GetAll(userParams);
+            // var cars = await _unityOfWork.Cars.GetAll(userParams);
 
             //TODO: move all this stuff to service!!!!!!!!!!!!
 
-            if (!String.IsNullOrEmpty(userParams.ExactUrl))
-            {
-                // var urls = _unityOfWork.Repository<Url>().GetAll();
-                // var url = urls.SingleOrDefault(x => x.UrlToScrape == userParams.ExactUrl);
-                cars = cars.Where(x => x.RelatedQueryUrl.UrlToScrape.ToLower() == userParams.ExactUrl.ToLower());
-            }
-            else
-            {
-                var currentUserName = User.GetUserName();
-                var user = _unityOfWork.Users.GetByUsername(currentUserName);
-                cars = cars.Where(x => user.InterestedUrls.Contains(x.RelatedQueryUrl));
-            }
+            var currentUserName = User.GetUserName();
 
-
-            if (userParams.PriceFrom != 0)
-                cars = cars.Where(x => x.Price >= userParams.PriceFrom);
-
-            if (userParams.PriceTo != 1_000_000)
-                cars = cars.Where(x => x.Price <= userParams.PriceTo);
-
-            if (userParams.EngineCapacityFrom != 0.0)
-                cars = cars.Where(x => x.EngineСapacity >= userParams.EngineCapacityFrom);
-
-            if (userParams.EngineCapacityTo != 10.0)
-                cars = cars.Where(x => x.EngineСapacity <= userParams.EngineCapacityTo);
-
-            if (userParams.KilometrageFrom != 0)
-                cars = cars.Where(x => x.Kilometrage >= userParams.KilometrageFrom);
-
-            if (userParams.KilometrageFrom != 1_000_000)
-                cars = cars.Where(x => x.Kilometrage <= userParams.KilometrageTo);
-
-            if (!String.IsNullOrEmpty(userParams.City))
-                cars = cars.Where(x => x.City == userParams.City);
-
-            cars = userParams.OrderBy switch
-            {
-                "highestKilometrage" => cars.OrderByDescending(x => x.Kilometrage),
-                "lowestKilometrage" => cars.OrderBy(x => x.Kilometrage),
-                "highestPrice" => cars.OrderByDescending(x => x.Price),
-                "lowestPrice" => cars.OrderBy(x => x.Price),
-                _ => cars.OrderByDescending(x => x.PublishDate),
-            };
+            var cars = await _carService.GetCars(userParams, currentUserName);
 
             var pagedCars = await PagedList<Car>.CreateAsync(cars, userParams.PageNumber, userParams.PageSize);
 

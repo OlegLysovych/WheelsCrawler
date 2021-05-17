@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="text-center mt-3" *ngIf="cars">
+  <div class="text-center mt-3" *ngIf="(searchService.carsThread$ | async).length > 0">
     <h3>В даній вибірці знайдено {{ pagination?.totalItems }} автомобілі</h3>
   </div>
 
@@ -34,7 +34,7 @@
         </select>
       </div>
 
-      <div class="d-flex flex-column" *ngIf="cars">
+      <div class="d-flex flex-column" *ngIf="(searchService.carsThread$ | async).length > 0">
         <div class="form-group ml-1">
           <label>Ціна від:</label>
           <input
@@ -46,7 +46,7 @@
           />
         </div>
 
-        <div class="form-group ml-1" *ngIf="cars">
+        <div class="form-group ml-1" *ngIf="(searchService.carsThread$ | async).length > 0">
           <label>Ціна до:</label>
           <input
             type="number"
@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <div class="d-flex flex-column" *ngIf="cars">
+      <div class="d-flex flex-column" *ngIf="(searchService.carsThread$ | async).length > 0">
         <div class="form-group ml-1">
           <label>Об'єм двигуна від:</label>
           <input
@@ -70,7 +70,7 @@
           />
         </div>
 
-        <div class="form-group ml-1" *ngIf="cars">
+        <div class="form-group ml-1" *ngIf="(searchService.carsThread$ | async).length > 0">
           <label>Об'єм двигуна до:</label>
           <input
             type="number"
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-      <div class="d-flex flex-column" *ngIf="cars">
+      <div class="d-flex flex-column" *ngIf="(searchService.carsThread$ | async).length > 0">
         <div class="form-group ml-1">
           <label>Пробіг від:</label>
           <input
@@ -94,7 +94,7 @@
           />
         </div>
 
-        <div class="form-group ml-1" *ngIf="cars">
+        <div class="form-group ml-1" *ngIf="(searchService.carsThread$ | async).length > 0">
           <label>Пробіг до:</label>
           <input
             type="number"
@@ -115,12 +115,12 @@
           (click)="resetFilters()"
           class="btn btn-info"
           type="submit"
-          *ngIf="cars"
+          *ngIf="(searchService.carsThread$ | async).length > 0"
         >
           Скинути фільтр
         </button>
       </div>
-      <div class="btn-group align-self-stretch" dropdown *ngIf="cars">
+      <div class="btn-group align-self-stretch" dropdown *ngIf="(searchService.carsThread$ | async).length > 0">
         <button
           id="button-basic"
           dropdownToggle
@@ -191,7 +191,7 @@
       </div>
     </form>
   </div>
-  <div class="container d-flex-column text-center" *ngIf="!cars">
+  <div class="container d-flex-column text-center" *ngIf="(searchService.carsThread$ | async).length == 0">
     <h3>
       Витяг даних, в залежності від кількості оголошень, може зайняти до двох
       хвилин.
@@ -224,7 +224,7 @@
   </div>
   <div class="container">
     <div class="card-columns align-items-stretch py-5">
-      <div class="" *ngFor="let item of cars">
+      <div class="" *ngFor="let item of (searchService.carsThread$ | async)">
         <app-cars-card [car]="item"></app-cars-card>
       </div>
     </div>

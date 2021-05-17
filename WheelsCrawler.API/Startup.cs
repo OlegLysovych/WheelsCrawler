@@ -18,6 +18,7 @@ using WheelsCrawler.API.Extensions;
 using WheelsCrawler.API.Interfaces;
 using WheelsCrawler.API.Middleware;
 using WheelsCrawler.API.Services;
+using WheelsCrawler.API.SignalR;
 using WheelsCrawler.Data.Models;
 using WheelsCrawler.Data.unitOfWork;
 
@@ -42,6 +43,8 @@ namespace WheelsCrawler.API
             services.AddCors();
 
             services.AddIdentityServices(_config);
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +62,7 @@ namespace WheelsCrawler.API
 
             app.UseRouting();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+            app.UseCors(x => x.AllowAnyMethod().AllowCredentials().AllowAnyHeader().WithOrigins("https://localhost:4200"));
 
             app.UseAuthentication();
 
@@ -68,6 +71,8 @@ namespace WheelsCrawler.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                // endpoints.MapHub<SearchHub>("hubs/search");
+                endpoints.MapHub<SearchHub>("hubs/search");
             });
         }
     }

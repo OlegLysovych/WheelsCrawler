@@ -15,9 +15,31 @@ namespace WheelsCrawler.Data.Repository
         {
         }
 
-         public async Task<IQueryable<Car>> GetAll(UserParams userParams)
+        public async Task<IQueryable<Car>> GetAll(UserParams userParams)
         {
-            var query = _dbContext.Cars.AsNoTracking();
+
+            var query = _dbContext.Cars.AsNoTracking()
+                                       .Include(x => x.RelatedQueryUrl)
+                                       .AsNoTracking()
+                                       .Include(x => x.CarBrand)
+                                       .AsNoTracking()
+                                       .Include(x => x.CarModel)
+                                       .AsNoTracking();
+
+            // query = query.Where(x => x.RelatedQueryUrl.UrlToScrape.ToLower() == userParams.ExactUrl.ToLower());
+            return query;
+            
+            // return await PagedList<Car>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+        }
+        public new IQueryable<Car> GetAll()
+        {
+            var query = _dbContext.Cars.AsNoTracking()
+                                       .Include(x => x.RelatedQueryUrl)
+                                       .AsNoTracking()
+                                       .Include(x => x.CarBrand)
+                                       .AsNoTracking()
+                                       .Include(x => x.CarModel)
+                                       .AsNoTracking();
             return query;
             
             // return await PagedList<Car>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
